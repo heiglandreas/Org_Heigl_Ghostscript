@@ -1,0 +1,61 @@
+README:
+
+Copyright (c) 2009 Andreas Heigl<andreas@heigl.org>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+ +----------------------------------------------------------------------------+
+ | Installation:                                                              |
+ +----------------------------------------------------------------------------+
+ 
+Copy the 'Org'-folder somewhere to your PHP-include-directory
+
+ +----------------------------------------------------------------------------+
+ | Usage:                                                              |
+ +----------------------------------------------------------------------------+
+<?php
+// Create the ghostscript-Wrapper
+$gs = new Org_Heigl_Ghostscript ();
+
+// Set the device
+$gs -> setDevice ( 'jpeg' )
+// Set the input file
+    -> setInputFile ( 'path/to/my/ps/or/pdf/file' )
+// Set the output file that will be created in the same directory as the input
+    -> setOutputFile ( 'output' )
+// Set the resolution to 96 pixel per inch
+    -> setResolution ( 96 )
+// Set Text-antialiasing to the highest level
+    -> setTextAntiAliasing ( Org_Heigl_Ghostscript::ANTIALIASING_HIGH );
+
+// Set the jpeg-quality to 100
+$gs -> getDevice () -> setQuality ( 100 );
+
+// convert the input file to an image
+if ( true === $gs -> render () ) {
+    echo 'success';
+} else {
+    echo 'some error occured';
+}
+?>
+
+ +----------------------------------------------------------------------------+
+ | Documentation:                                                              |
+ +----------------------------------------------------------------------------+
+Use the included documentation from the 'doc'-folder

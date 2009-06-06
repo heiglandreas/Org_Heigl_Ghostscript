@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metrics files="7" functions="0" cls="7" clsa="1" clsc="6" roots="1" leafs="6" interfs="0" maxdit="1">
+  <file name="/Volumes/Daten/Users/Shared/Sites/Ghostscript/src/Org/Heigl/Ghostscript.php" classes="1" functions="0" loc="515" cloc="314" ncloc="201" locExecutable="88" locExecuted="82" coverage="93.181818">
+    <class name="Org_Heigl_Ghostscript" loc="405" locExecutable="88" locExecuted="82" aif="0.000000" ahf="100.000000" ca="0" ce="0" csz="31" cis="22" coverage="93.181818" dit="0" i="0.000000" impl="0" mif="0.000000" mhf="0.000000" noc="0" pf="0.000000" vars="9" varsnp="0" varsi="9" wmc="47" wmcnp="47" wmci="47">
+      <method name="setGsPath" loc="9" locExecutable="7" locExecuted="7" coverage="100.000000" ccn="3" crap="3.000000" npath="4" parameters="1"/>
+      <method name="getGsPath" loc="3" locExecutable="1" locExecuted="1" coverage="100.000000" ccn="1" crap="1.000000" npath="1" parameters="0"/>
+      <method name="setInputFile" loc="14" locExecutable="11" locExecuted="6" coverage="54.545455" ccn="4" crap="5.502630" npath="6" parameters="1"/>
+      <method name="getInputFile" loc="3" locExecutable="1" locExecuted="1" coverage="100.000000" ccn="1" crap="1.000000" npath="1" parameters="0"/>
+      <method name="setOutputFile" loc="6" locExecutable="4" locExecuted="4" coverage="100.000000" ccn="2" crap="2.000000" npath="2" parameters="1"/>
+      <method name="getOutputFile" loc="6" locExecutable="3" locExecuted="3" coverage="100.000000" ccn="2" crap="2.000000" npath="2" parameters="0"/>
+      <method name="getBasePath" loc="6" locExecutable="3" locExecuted="3" coverage="100.000000" ccn="2" crap="2.000000" npath="2" parameters="0"/>
+      <method name="render" loc="16" locExecutable="7" locExecuted="6" coverage="85.714286" ccn="3" crap="3.026239" npath="4" parameters="0"/>
+      <method name="getRenderString" loc="18" locExecutable="15" locExecuted="15" coverage="100.000000" ccn="4" crap="4.000000" npath="8" parameters="0"/>
+      <method name="isGraphicsAntiAliasingSet" loc="6" locExecutable="3" locExecuted="3" coverage="100.000000" ccn="2" crap="2.000000" npath="2" parameters="0"/>
+      <method name="setGraphicsAntiAliasing" loc="7" locExecutable="4" locExecuted="4" coverage="100.000000" ccn="5" crap="5.000000" npath="2" parameters="1"/>
+      <method name="getGraphicsAntiAliasing" loc="3" locExecutable="1" locExecuted="1" coverage="100.000000" ccn="1" crap="1.000000" npath="1" parameters="0"/>
+      <method name="isTextAntiAliasingSet" loc="6" locExecutable="3" locExecuted="3" coverage="100.000000" ccn="2" crap="2.000000" npath="2" parameters="0"/>
+      <method name="setTextAntiAliasing" loc="7" locExecutable="4" locExecuted="4" coverage="100.000000" ccn="5" crap="5.000000" npath="2" parameters="1"/>
+      <method name="getTextAntiAliasing" loc="3" locExecutable="1" locExecuted="1" coverage="100.000000" ccn="1" crap="1.000000" npath="1" parameters="0"/>
+      <method name="setResolution" loc="9" locExecutable="5" locExecuted="5" coverage="100.000000" ccn="2" crap="2.000000" npath="2" parameters="2"/>
+      <method name="getResolution" loc="3" locExecutable="1" locExecuted="1" coverage="100.000000" ccn="1" crap="1.000000" npath="1" parameters="0"/>
+      <method name="setDevice" loc="9" locExecutable="6" locExecuted="6" coverage="100.000000" ccn="2" crap="2.000000" npath="2" parameters="1"/>
+      <method name="__construct" loc="3" locExecutable="1" locExecuted="1" coverage="100.000000" ccn="1" crap="1.000000" npath="1" parameters="0"/>
+      <method name="getDevice" loc="3" locExecutable="1" locExecuted="1" coverage="100.000000" ccn="1" crap="1.000000" npath="1" parameters="0"/>
+      <method name="setUseCie" loc="4" locExecutable="2" locExecuted="2" coverage="100.000000" ccn="1" crap="1.000000" npath="1" parameters="1"/>
+      <method name="useCie" loc="3" locExecutable="1" locExecuted="1" coverage="100.000000" ccn="1" crap="1.000000" npath="1" parameters="0"/>
+    </class>
+  </file>
+  <file name="/Volumes/Daten/Users/Shared/Sites/Ghostscript/src/Org/Heigl/Ghostscript/Device/Jpeg.php" classes="1" functions="0" loc="124" cloc="79" ncloc="45" locExecutable="17" locExecuted="17" coverage="100.000000">
+    <class name="Org_Heigl_Ghostscript_Device_Jpeg" loc="75" locExecutable="17" locExecuted="17" aif="0.000000" ahf="100.000000" ca="0" ce="1" csz="6" cis="5" coverage="100.000000" dit="1" i="1.000000" impl="0" mif="0.000000" mhf="0.000000" noc="0" pf="100.000000" vars="1" varsnp="0" varsi="1" wmc="7" wmcnp="7" wmci="7">
+      <method name="getDevice" loc="3" locExecutable="1" locExecuted="1" coverage="100.000000" ccn="1" crap="1.000000" npath="1" parameters="0"/>
+      <method name="getParameterString" loc="8" locExecutable="5" locExecuted="5" coverage="100.000000" ccn="1" crap="1.000000" npath="1" parameters="0"/>
+      <method name="setQuality" loc="15" locExecutable="9" locExecuted="9" coverage="100.000000" ccn="3" crap="3.000000" npath="4" parameters="1"/>
+      <method name="getQuality" loc="3" locExecutable="1" locExecuted="1" coverage="100.000000" ccn="1" crap="1.000000" npath="1" parameters="0"/>
+      <method name="getFileEnding" loc="3" locExecutable="1" locExecuted="1" coverage="100.000000" ccn="1" crap="1.000000" npath="1" parameters="0"/>
+    </class>
+  </file>
+  <file name="/Volumes/Daten/Users/Shared/Sites/Ghostscript/src/Org/Heigl/Ghostscript/Device/Png.php" classes="1" functions="0" loc="160" cloc="99" ncloc="61" locExecutable="25" locExecuted="25" coverage="100.000000">
+    <class name="Org_Heigl_Ghostscript_Device_Png" loc="111" locExecutable="25" locExecuted="25" aif="0.000000" ahf="100.000000" ca="0" ce="1" csz="8" cis="6" coverage="100.000000" dit="1" i="1.000000" impl="0" mif="0.000000" mhf="0.000000" noc="0" pf="100.000000" vars="2" varsnp="0" varsi="2" wmc="10" wmcnp="10" wmci="10">
+      <method name="getDevice" loc="3" locExecutable="1" locExecuted="1" coverage="100.000000" ccn="1" crap="1.000000" npath="1" parameters="0"/>
+      <method name="setDevice" loc="19" locExecutable="12" locExecuted="12" coverage="100.000000" ccn="2" crap="2.000000" npath="2" parameters="1"/>
+      <method name="getParameterString" loc="8" locExecutable="5" locExecuted="5" coverage="100.000000" ccn="3" crap="3.000000" npath="2" parameters="0"/>
+      <method name="setBackgroundColor" loc="10" locExecutable="5" locExecuted="5" coverage="100.000000" ccn="2" crap="2.000000" npath="2" parameters="1"/>
+      <method name="getBackgroundColor" loc="3" locExecutable="1" locExecuted="1" coverage="100.000000" ccn="1" crap="1.000000" npath="1" parameters="0"/>
+      <method name="getFileEnding" loc="3" locExecutable="1" locExecuted="1" coverage="100.000000" ccn="1" crap="1.000000" npath="1" parameters="0"/>
+    </class>
+  </file>
+  <file name="/Volumes/Daten/Users/Shared/Sites/Ghostscript/tests/Org/Heigl/AllTests.php" classes="1" functions="0" loc="74" cloc="48" ncloc="26" locExecutable="8" locExecuted="0" coverage="0.000000">
+    <class name="Org_Heigl_AllTests" loc="20" locExecutable="8" locExecuted="0" aif="0.000000" ahf="0.000000" ca="0" ce="1" csz="2" cis="2" coverage="0.000000" dit="0" i="1.000000" impl="0" mif="0.000000" mhf="0.000000" noc="0" pf="0.000000" vars="0" varsnp="0" varsi="0" wmc="2" wmcnp="2" wmci="2">
+      <method name="main" loc="3" locExecutable="1" locExecuted="0" coverage="0.000000" ccn="1" crap="2.000000" npath="1" parameters="0"/>
+      <method name="suite" loc="13" locExecutable="6" locExecuted="0" coverage="0.000000" ccn="1" crap="2.000000" npath="1" parameters="0"/>
+    </class>
+  </file>
+  <file name="/Volumes/Daten/Users/Shared/Sites/Ghostscript/tests/AllTests.php" classes="1" functions="0" loc="69" cloc="34" ncloc="35" locExecutable="6" locExecuted="0" coverage="0.000000">
+    <class name="AllTests" loc="17" locExecutable="6" locExecuted="0" aif="0.000000" ahf="0.000000" ca="0" ce="1" csz="2" cis="2" coverage="0.000000" dit="0" i="1.000000" impl="0" mif="0.000000" mhf="0.000000" noc="0" pf="0.000000" vars="0" varsnp="0" varsi="0" wmc="2" wmcnp="2" wmci="2">
+      <method name="main" loc="4" locExecutable="1" locExecuted="0" coverage="0.000000" ccn="1" crap="2.000000" npath="1" parameters="0"/>
+      <method name="suite" loc="9" locExecutable="4" locExecuted="0" coverage="0.000000" ccn="1" crap="2.000000" npath="1" parameters="0"/>
+    </class>
+  </file>
+  <file name="/Volumes/Daten/Users/Shared/Sites/Ghostscript/tests/Org/Heigl/Ghostscript/Device/AllTests.php" classes="1" functions="0" loc="76" cloc="48" ncloc="28" locExecutable="10" locExecuted="0" coverage="0.000000">
+    <class name="Org_Heigl_Ghostscript_Device_AllTests" loc="22" locExecutable="10" locExecuted="0" aif="0.000000" ahf="0.000000" ca="0" ce="1" csz="2" cis="2" coverage="0.000000" dit="0" i="1.000000" impl="0" mif="0.000000" mhf="0.000000" noc="0" pf="0.000000" vars="0" varsnp="0" varsi="0" wmc="2" wmcnp="2" wmci="2">
+      <method name="main" loc="3" locExecutable="1" locExecuted="0" coverage="0.000000" ccn="1" crap="2.000000" npath="1" parameters="0"/>
+      <method name="suite" loc="15" locExecutable="8" locExecuted="0" coverage="0.000000" ccn="1" crap="2.000000" npath="1" parameters="0"/>
+    </class>
+  </file>
+  <file name="/Volumes/Daten/Users/Shared/Sites/Ghostscript/src/Org/Heigl/Ghostscript/Device/Abstract.php" classes="1" functions="0" loc="72" cloc="59" ncloc="13" locExecutable="1" locExecuted="1" coverage="100.000000">
+    <class name="Org_Heigl_Ghostscript_Device_Abstract" loc="26" locExecutable="1" locExecuted="1" aif="0.000000" ahf="0.000000" ca="2" ce="0" csz="3" cis="3" coverage="100.000000" dit="0" i="0.000000" impl="0" mif="0.000000" mhf="0.000000" noc="3" pf="0.000000" vars="0" varsnp="0" varsi="0" wmc="3" wmcnp="3" wmci="3">
+      <method name="getDevice" loc="1" locExecutable="0" locExecuted="0" coverage="100.000000" ccn="1" crap="1.000000" npath="1" parameters="0"/>
+      <method name="getParameterString" loc="3" locExecutable="1" locExecuted="1" coverage="100.000000" ccn="1" crap="1.000000" npath="1" parameters="0"/>
+      <method name="getFileEnding" loc="1" locExecutable="0" locExecuted="0" coverage="100.000000" ccn="1" crap="1.000000" npath="1" parameters="0"/>
+    </class>
+  </file>
+</metrics>

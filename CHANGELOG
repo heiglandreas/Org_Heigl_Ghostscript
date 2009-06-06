@@ -1,0 +1,4 @@
+2009-06-04 - Version 0.1
+
+Created the first version of the ghostscript-wrapper. Implemented 2 devices for
+exporting postscript or pdf-files (png and jpeg)

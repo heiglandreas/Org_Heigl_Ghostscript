@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd version="PHPUnit 3.3.9">
+  <file name="/Volumes/Daten/Users/Shared/Sites/Ghostscript/src/Org/Heigl/Ghostscript.php">
+    <violation rule="CodeCoverage" priority="1" line="193" to-line="206" package="Org_Heigl_Ghostscript" class="Org_Heigl_Ghostscript" method="setInputFile">The code coverage is 54.55 which is considered medium.</violation>
+  </file>
+  <file name="/Volumes/Daten/Users/Shared/Sites/Ghostscript/tests/Org/Heigl/AllTests.php">
+    <violation rule="CodeCoverage" priority="1" line="57" to-line="59" package="Org_Heigl_Ghostscript.UnitTests" class="Org_Heigl_AllTests" method="main">The code coverage is 0.00 which is considered low.</violation>
+    <violation rule="CodeCoverage" priority="1" line="61" to-line="73" package="Org_Heigl_Ghostscript.UnitTests" class="Org_Heigl_AllTests" method="suite">The code coverage is 0.00 which is considered low.</violation>
+  </file>
+  <file name="/Volumes/Daten/Users/Shared/Sites/Ghostscript/tests/AllTests.php">
+    <violation rule="CodeCoverage" priority="1" line="51" to-line="54" package="global" class="AllTests" method="main">The code coverage is 0.00 which is considered low.</violation>
+    <violation rule="CodeCoverage" priority="1" line="56" to-line="64" package="global" class="AllTests" method="suite">The code coverage is 0.00 which is considered low.</violation>
+  </file>
+  <file name="/Volumes/Daten/Users/Shared/Sites/Ghostscript/tests/Org/Heigl/Ghostscript/Device/AllTests.php">
+    <violation rule="CodeCoverage" priority="1" line="57" to-line="59" package="Org_Heigl_Ghostscript.UnitTests" class="Org_Heigl_Ghostscript_Device_AllTests" method="main">The code coverage is 0.00 which is considered low.</violation>
+    <violation rule="CodeCoverage" priority="1" line="61" to-line="75" package="Org_Heigl_Ghostscript.UnitTests" class="Org_Heigl_Ghostscript_Device_AllTests" method="suite">The code coverage is 0.00 which is considered low.</violation>
+  </file>
+</pmd>
