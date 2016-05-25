@@ -1,21 +1,6 @@
-# Org_Heigl\Ghostscript
+# Basic usage
 
-[![Build Status](https://travis-ci.org/heiglandreas/Org_Heigl_Ghostscript.svg?branch=master)](https://travis-ci.org/heiglandreas/Org_Heigl_Ghostscript)
-[![Coverage Status](https://coveralls.io/repos/github/heiglandreas/Org_Heigl_Ghostscript/badge.svg?branch=master)](https://coveralls.io/github/heiglandreas/Org_Heigl_Ghostscript?branch=master)
-
-A PHP-wrapper to the Ghostscript-CLI
-
-## Installation
-
-This package is best installed using [composer](https://getcomposer.org).
-
-    composer require org_heigl/ghostscript
-
-## Documentation
-
-You can find the documentation for the library at https://heiglandreas.github.io/Org_Heigl_Ghostscript
-
-## Usage
+## Convert a PDF- or Postscript-File to a JPEG
 
 ```
 <?php
@@ -43,4 +28,3 @@ if (true === $gs->render()) {
     echo 'some error occured';
 }
 ```
-

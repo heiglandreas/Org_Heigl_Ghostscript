@@ -2,6 +2,8 @@ docs_dir: doc
 site_dir: build/html
 pages:
     - index.md
+    - "Usage":
+      - "Basic Usage" : usage.md
 site_name: Org_Heigl\Ghostscript
 site_description: A wrapper to the Ghostscript CLI
 repo_url: 'https://github.com/heiglandreas/Org_Heigl_Ghostscript'
