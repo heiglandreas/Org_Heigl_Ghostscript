@@ -2,12 +2,12 @@
     "docs": [
         {
             "location": "/", 
-            "text": "Org_Heigl\\Ghostscript\n\n\nA wrapper to the Ghostscript-CLI\n\n\nInstallation\n\n\nThis library is best installed using \ncomposer\n\n\nFurther Documentation\n\n\n\n\nAPI (DocBlock)\n\n\nCode-Coverage", 
+            "text": "Org_Heigl\\Ghostscript\n\n\nA wrapper to the Ghostscript-CLI\n\n\nThe main reason to create this library was to create images from PDF- or\nPostscript-files. As those Files can be either in RGB- or in CMYK-Colorspace the\nlibrary tries to handle colors so that the original file and the image are close\nin color-impression. This is especially important as f.e. PNG is RGB-only while\nJPEG can be either in RGB or CMYK.\n\n\nMultipaged PDF-Files will create multiple images! To not overwrite your image-files\nthe filename will be passed to sprintf to create a filename containing the\nnumber of the page. The one and only parameter will be the number of the page.\n\n\nInstallation\n\n\nThis library is best installed using \ncomposer\n\n\nFurther Documentation\n\n\n\n\nAPI (DocBlock)\n\n\nCode-Coverage", 
             "title": "Home"
         }, 
         {
             "location": "/#org_heiglghostscript", 
-            "text": "A wrapper to the Ghostscript-CLI", 
+            "text": "A wrapper to the Ghostscript-CLI  The main reason to create this library was to create images from PDF- or\nPostscript-files. As those Files can be either in RGB- or in CMYK-Colorspace the\nlibrary tries to handle colors so that the original file and the image are close\nin color-impression. This is especially important as f.e. PNG is RGB-only while\nJPEG can be either in RGB or CMYK.  Multipaged PDF-Files will create multiple images! To not overwrite your image-files\nthe filename will be passed to sprintf to create a filename containing the\nnumber of the page. The one and only parameter will be the number of the page.", 
             "title": "Org_Heigl\\Ghostscript"
         }, 
         {

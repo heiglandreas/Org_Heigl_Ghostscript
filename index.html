@@ -127,6 +127,14 @@
 
 <h1 id="org_heiglghostscript">Org_Heigl\Ghostscript</h1>
 <p>A wrapper to the Ghostscript-CLI</p>
+<p>The main reason to create this library was to create images from PDF- or
+Postscript-files. As those Files can be either in RGB- or in CMYK-Colorspace the
+library tries to handle colors so that the original file and the image are close
+in color-impression. This is especially important as f.e. PNG is RGB-only while
+JPEG can be either in RGB or CMYK.</p>
+<p>Multipaged PDF-Files will create multiple images! To not overwrite your image-files
+the filename will be passed to sprintf to create a filename containing the
+number of the page. The one and only parameter will be the number of the page.</p>
 <h2 id="installation">Installation</h2>
 <p>This library is best installed using <a href="https://getcomposer.org">composer</a></p>
 <h2 id="further-documentation">Further Documentation</h2>
@@ -182,5 +190,5 @@
 
 <!--
 MkDocs version : 0.15.3
-Build Date UTC : 2016-05-25 07:49:55.368858
+Build Date UTC : 2016-05-25 09:07:39.798815
 -->
