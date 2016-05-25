@@ -1,0 +1,29 @@
+{
+    "name": "org_heigl/ghostscript",
+    "description": "A PHP-Wrapper around the Ghostscript-CLI",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andreas Heigl",
+            "email": "andreas@heigl.org"
+        }
+    ],
+    "autoload" : {
+        "psr-4" : {
+            "Org_Heigl\\Ghostscript\\" : "src/"
+        }
+    },
+    "autoload-dev" : {
+        "psr-4" : {
+            "Org_Heigl\\GhostscriptTest\\" : "tests/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8||^5.3",
+        "fabpot/php-cs-fixer": "^1.11"
+    },
+    "scripts" : {
+        "csfix" : "./vendor/bin/php-cs-fixer fix . --level=psr2"
+    }
+}

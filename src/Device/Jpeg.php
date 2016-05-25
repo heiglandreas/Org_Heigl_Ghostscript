@@ -1,8 +1,6 @@
 <?php
 /**
- * $Id$
- *
- * Copyright (c) 2008-2009 Andreas Heigl<andreas@heigl.org>
+ * Copyright (c) Andreas Heigl<andreas@heigl.org>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,51 +20,98 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @category   Org_Heigl
- * @package    Org_Heigl_Ghostscript
- * @subpackage Devices
  * @author     Andreas Heigl <a.heigl@wdv.de>
- * @copyright  2008-2009 Andreas Heigl
+ * @copyright  Andreas Heigl
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version    SVN: $Revision$
- * @since      04.06.2009
  */
+
+
+namespace Org_Heigl\Ghostscript\Device;
 
 /**
  * This abstract class defines interfaces for Ghostscript devices
  *
- * @category   Org_Heigl
- * @package    Org_Heigl_Ghostscript
- * @subpackage Devices
  * @author     Andreas Heigl <a.heigl@wdv.de>
  * @copyright  2008-2009 Andreas Heigl
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version    SVN: $Revision$
- * @since      04.06.2009
  */
-abstract class Org_Heigl_Ghostscript_Device_Abstract
+class Jpeg implements DeviceInterface
 {
+    /**
+     * The quality of the JPEG
+     *
+     * @var int $_quality
+     */
+    protected $_quality = 75;
+    
     /**
      * Get the name of the device as Ghostscript expects it
      *
      * @return string
      */
-    abstract public function getDevice ();
+    public function getDevice()
+    {
+        return 'jpeg';
+    }
 
     /**
      * Get the complete parameter string for this device
      *
      * @return string
      */
-    public function getParameterString () {
-        return '';
+    public function getParameterString()
+    {
+        $string = '';
+        $string .= ' -sDEVICE=' . $this -> getDevice();
+        $string .= ' -dJPEGQ=' . $this -> getQuality();
+        $string .= ' -dQFactor=' . 1 / 100 * $this -> getQuality();
+
+        return $string;
     }
 
     /**
-     * Get the ending of the file
+     * Set the Quality of the JPEG
+     *
+     * This can be any integer from 0 to 100. It defaults to 75
+     *
+     * @param int $quality
+     *
+     * @return Jpeg
+     */
+    public function setQuality($quality)
+    {
+        $quality = (int) $quality;
+
+        if (100 < $quality) {
+            $quality = 100;
+        }
+
+        if (0 > $quality) {
+            $quality = 0;
+        }
+
+        $this -> _quality = $quality;
+
+        return $this;
+    }
+
+    /**
+     * Get the Quality of the JPEG
+     *
+     * @return int
+     */
+    public function getQuality()
+    {
+        return $this -> _quality;
+    }
+
+    /**
+     * Get the file ending
      *
      * @return string
      */
-    abstract function getFileEnding ();
-
+    public function getFileEnding()
+    {
+        return 'jpeg';
+    }
 }

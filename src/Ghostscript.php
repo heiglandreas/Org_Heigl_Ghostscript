@@ -1,8 +1,6 @@
 <?php
 /**
- * $Id$
- *
- * Copyright (c) 2008-2009 Andreas Heigl<andreas@heigl.org>
+ * Copyright (c) Andreas Heigl<andreas@heigl.org>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,16 +20,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * This is the ant-buildfile
- *
- * @category  Org_Heigl
- * @package   Org_Heigl_Ghostscript
  * @author    Andreas Heigl <andreas@heigl.org>
- * @copyright 2008 Andreas Heigl<andreas@heigl.org>
+ * @copyright Andreas Heigl<andreas@heigl.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version   SVN: $Revision$
- * @since     03.06.2009
  */
+
+namespace Org_Heigl\Ghostscript;
+
+use Org_Heigl\Ghostscript\Device\DeviceInterface;
 
 /**
  * This class contains a wrapper around the Ghostscript-Application.
@@ -106,7 +102,7 @@
  * @version   SVN: $Revision$
  * @since     03.06.2009
  */
-class Org_Heigl_Ghostscript
+class Ghostscript
 {
     /**
      * This property contains the path to the Ghostscript-Application
@@ -140,7 +136,7 @@ class Org_Heigl_Ghostscript
      *
      * @var array $supportedMimeTypes
      */
-    private static $supportedMimeTypes = array (
+    private static $supportedMimeTypes = array(
                                           'application/eps',
                                           'application/pdf',
                                           'application/ps',
@@ -159,14 +155,19 @@ class Org_Heigl_Ghostscript
      *
      * @return string
      */
-    public static function setGsPath ( $path = null ) {
-        if ( null === $path ) {
-            $path = exec( 'which gs' );
+    public static function setGsPath($path = null)
+    {
+        if (null === $path) {
+            $path = exec('which gs', $output);
+            if (! $output) {
+                throw new \UnexpectedValueException('No Ghostscript-instance found or running on windows. Please provide Path to the Ghostscript-executable');
+            }
+            $path = $output[0];
         }
-        if ( $path ) {
-            Org_Heigl_Ghostscript::$PATH = $path;
+        if ($path) {
+            Ghostscript::$PATH = $path;
         }
-        return Org_Heigl_Ghostscript::$PATH;
+        return Ghostscript::$PATH;
     }
 
     /**
@@ -174,8 +175,9 @@ class Org_Heigl_Ghostscript
      *
      * @return string
      */
-    public static function getGsPath () {
-        return Org_Heigl_Ghostscript::$PATH;
+    public static function getGsPath()
+    {
+        return Ghostscript::$PATH;
     }
 
 
@@ -188,17 +190,19 @@ class Org_Heigl_Ghostscript
      * @param string|SplFileInfo $file The File to use as input.
      *
      * @throws InvalidArgumentException when the provided file is not supported
-     * @return Org_Heigl_Ghostscript
+     * @return Ghostscript
      */
-    public function setInputFile ( $file ) {
-        if ( ! $file instanceof SplFileInfo ) {
-            $file = new SplFileInfo ( (string) $file );
+    public function setInputFile($file)
+    {
+        if (! $file instanceof \SplFileInfo) {
+            $file = new \SplFileInfo((string) $file);
         }
-        if ( extension_loaded ( 'fileinfo' ) ) {
-            $finfo = new finfo ();
-            $mime = $finfo -> file ( $file -> getPathName (), FILEINFO_MIME );
-            if ( ! in_array ( $mime, Org_Heigl_Ghostscript::$supportedMimeTypes ) ) {
-                throw new InvalidArgumentException ( 'The provided file seems not to be of a supported MIME-Type' );
+        if (extension_loaded('fileinfo') && file_exists($file)) {
+            $finfo = new \finfo();
+            $mime = $finfo->file($file->getPathName(), FILEINFO_MIME);
+            $mime = explode(';', $mime);
+            if (! in_array($mime[0], Ghostscript::$supportedMimeTypes)) {
+                throw new \InvalidArgumentException('The provided file seems not to be of a supported MIME-Type');
             }
         }
         $this -> _infile = $file;
@@ -210,7 +214,8 @@ class Org_Heigl_Ghostscript
      *
      * @return SplFileInfo
      */
-    public function getInputFile () {
+    public function getInputFile()
+    {
         return $this -> _infile;
     }
 
@@ -226,11 +231,12 @@ class Org_Heigl_Ghostscript
      *
      * @param string $name The filename
      *
-     * @return Org_Heigl_Ghostscript
+     * @return Ghostscript
      */
-    public function setOutputFile ( $name = 'output' ) {
-        if ( 0 !== strpos ( $name, DIRECTORY_SEPARATOR ) ) {
-            $name = $this -> getBasePath () . DIRECTORY_SEPARATOR . $name;
+    public function setOutputFile($name = 'output')
+    {
+        if (0 !== strpos($name, DIRECTORY_SEPARATOR)) {
+            $name = $this -> getBasePath() . DIRECTORY_SEPARATOR . $name;
         }
         $this -> _outfile = $name;
     }
@@ -244,9 +250,10 @@ class Org_Heigl_Ghostscript
      *
      * @return string
      */
-    public function getOutputFile () {
-        if ( 0 !== strpos ( $this -> _outfile, DIRECTORY_SEPARATOR ) ) {
-            return $this -> getBasePath () . DIRECTORY_SEPARATOR . $this -> _outfile;
+    public function getOutputFile()
+    {
+        if (0 !== strpos($this -> _outfile, DIRECTORY_SEPARATOR)) {
+            return $this -> getBasePath() . DIRECTORY_SEPARATOR . $this -> _outfile;
         }
         return $this -> _outfile;
     }
@@ -261,11 +268,12 @@ class Org_Heigl_Ghostscript
      *
      * @return string
      */
-    public function getBasePath () {
-        if ( null !== $this -> _infile ) {
-            return dirname ( $this -> _infile );
+    public function getBasePath()
+    {
+        if (null !== $this -> _infile) {
+            return dirname($this -> _infile);
         }
-        return sys_get_temp_dir ();
+        return sys_get_temp_dir();
     }
 
     /**
@@ -273,18 +281,18 @@ class Org_Heigl_Ghostscript
      *
      * @return bool
      */
-    public function render () {
-
-        $renderString = $this -> getRenderString ();
+    public function render()
+    {
+        $renderString = $this -> getRenderString();
 
         // We can't render anything without a render string
-        if ( '' == $renderString ) {
+        if ('' == $renderString) {
             return false;
         }
 
-        exec ( $renderString , $returnArray, $returnValue );
+        exec($renderString, $returnArray, $returnValue);
 
-        if ( 0 !== $returnValue ) {
+        if (0 !== $returnValue) {
             return false;
         }
         return true;
@@ -295,22 +303,23 @@ class Org_Heigl_Ghostscript
      *
      * @return string
      */
-    public function getRenderString () {
-        if ( null === $this -> getInputFile () ) {
+    public function getRenderString()
+    {
+        if (null === $this -> getInputFile()) {
             return '';
         }
-        $string  = Org_Heigl_Ghostscript::getGsPath ();
+        $string  = Ghostscript::getGsPath();
         $string .= ' -dSAFER -dQUIET -dNOPLATFONTS -dNOPAUSE -dBATCH';
-        $string .= ' -sOutputFile="' . $this -> getOutputFile () . '.' . $this -> getDevice () -> getFileEnding () . '"';
-        $string.=  $this -> getDevice () -> getParameterString ();
-        $string .= ' -r' . $this -> getResolution ();
-        if ( $this -> isTextAntiAliasingSet () ) {
-            $string .= ' -dTextAlphaBits=' . $this -> getTextAntiAliasing ();
+        $string .= ' -sOutputFile="' . $this -> getOutputFile() . '.' . $this -> getDevice() -> getFileEnding() . '"';
+        $string.=  $this -> getDevice() -> getParameterString();
+        $string .= ' -r' . $this -> getResolution();
+        if ($this -> isTextAntiAliasingSet()) {
+            $string .= ' -dTextAlphaBits=' . $this -> getTextAntiAliasing();
         }
-        if ( $this -> isGraphicsAntiAliasingSet () ) {
-            $string .= ' -dGraphicsAlphaBits=' . $this -> getGraphicsAntiAliasing ();
+        if ($this -> isGraphicsAntiAliasingSet()) {
+            $string .= ' -dGraphicsAlphaBits=' . $this -> getGraphicsAntiAliasing();
         }
-        $string .= ' "' . $this -> getInputFile () . '"';
+        $string .= ' "' . $this -> getInputFile() . '"';
         return $string;
     }
     /**
@@ -318,8 +327,9 @@ class Org_Heigl_Ghostscript
      *
      * @return boolean
      */
-    public function isGraphicsAntiAliasingSet () {
-        if ( 0 < $this -> _graphicsAntiAliasing ) {
+    public function isGraphicsAntiAliasingSet()
+    {
+        if (0 < $this -> _graphicsAntiAliasing) {
             return true;
         }
         return false;
@@ -330,11 +340,11 @@ class Org_Heigl_Ghostscript
      *
      * @param int $level The AntiaAliasing level to set.
      *
-     * @return Org_Heigl_Ghostscript
+     * @return Ghostscript
      */
-    public function setGraphicsAntiAliasing ( $level ) {
-
-        if ( $level === 0 || $level === 1 || $level === 2 || $level === 4 ) {
+    public function setGraphicsAntiAliasing($level)
+    {
+        if ($level === 0 || $level === 1 || $level === 2 || $level === 4) {
             $this -> _graphicsAntiAliasing = $level;
         }
         return $this;
@@ -352,7 +362,8 @@ class Org_Heigl_Ghostscript
      *
      * @return int
      */
-    public function getGraphicsAntiAliasing () {
+    public function getGraphicsAntiAliasing()
+    {
         return $this -> _graphicsAntiAliasing;
     }
 
@@ -362,8 +373,9 @@ class Org_Heigl_Ghostscript
      *
      * @return boolean
      */
-    public function isTextAntiAliasingSet () {
-        if ( 0 < $this -> _textAntiAliasing ) {
+    public function isTextAntiAliasingSet()
+    {
+        if (0 < $this -> _textAntiAliasing) {
             return true;
         }
         return false;
@@ -374,11 +386,11 @@ class Org_Heigl_Ghostscript
      *
      * @param int $level The AntiaAliasing level to set.
      *
-     * @return Org_Heigl_Ghostscript
+     * @return Ghostscript
      */
-    public function setTextAntiAliasing ( $level ) {
-
-        if ( $level === 0 || $level === 1 || $level === 2 || $level === 4 ) {
+    public function setTextAntiAliasing($level)
+    {
+        if ($level === 0 || $level === 1 || $level === 2 || $level === 4) {
             $this -> _textAntiAliasing = $level;
         }
         return $this;
@@ -396,7 +408,8 @@ class Org_Heigl_Ghostscript
      *
      * @return int
      */
-    public function getTextAntiAliasing () {
+    public function getTextAntiAliasing()
+    {
         return $this -> _textAntiAliasing;
     }
 
@@ -411,10 +424,11 @@ class Org_Heigl_Ghostscript
      * @param int The horizontal resolution to set
      * @param int The vertical resolution to set
      *
-     * @return Org_Heigl_Ghostscript
+     * @return Ghostscript
      */
-    public function setResolution ( $horizontal, $vertical = null ) {
-        if ( null !== $vertical ) {
+    public function setResolution($horizontal, $vertical = null)
+    {
+        if (null !== $vertical) {
             $this -> _resolution = $horizontal . 'x' . $vertical;
         } else {
             $this -> _resolution = $horizontal;
@@ -435,23 +449,23 @@ class Org_Heigl_Ghostscript
      *
      * @return string
      */
-    public function getResolution () {
+    public function getResolution()
+    {
         return $this -> _resolution;
     }
 
     /**
      * Set the output-device
      *
-     * @param Org_Heigl_Ghostscript_Device_Abstract $device
+     * @param DeviceInterface|string $device
      *
-     * @return Org_Heigl_Ghostscript
+     * @return Ghostscript
      */
-    public function setDevice ( $device ) {
-
-        if ( ! $device instanceof Org_Heigl_Ghostscript_Device_Abstract ) {
-            $classname = 'Org_Heigl_Ghostscript_Device_' . ucfirst ( strtolower ( $device ) );
-            include_once str_replace ( '_', '/', $classname) . '.php';
-            $device = new  $classname();
+    public function setDevice($device)
+    {
+        if (! $device instanceof DeviceInterface) {
+            $classname = 'Org_Heigl\\Ghostscript\\Device\\' . ucfirst(strtolower($device));
+            $device = new $classname();
         }
         $this -> _device = $device;
     }
@@ -470,8 +484,9 @@ class Org_Heigl_Ghostscript
      *
      * @return void
      */
-    public function __construct () {
-        $this -> setDevice ( 'png' );
+    public function __construct()
+    {
+        $this->setDevice('png');
     }
 
     /**
@@ -479,7 +494,8 @@ class Org_Heigl_Ghostscript
      *
      * @return Org_Heigl_Ghostscript_Device_Abstract
      */
-    public function getDevice () {
+    public function getDevice()
+    {
         return $this -> _device;
     }
 
@@ -490,7 +506,8 @@ class Org_Heigl_Ghostscript
      *
      * @return Org_Heigl_Ghostscript
      */
-     public function setUseCie ( $useCie = true ) {
+     public function setUseCie($useCie = true)
+     {
          $this -> _useCie = (bool) $useCie;
          return $this;
      }
@@ -500,7 +517,8 @@ class Org_Heigl_Ghostscript
       *
       * @return boolean
       */
-     public  function useCie () {
+     public function useCie()
+     {
          return (bool) $this -> _useCie;
      }
 
@@ -512,4 +530,4 @@ class Org_Heigl_Ghostscript
      protected $_useCie = false;
 }
 
-Org_Heigl_Ghostscript::setGsPath();
+Ghostscript::setGsPath();

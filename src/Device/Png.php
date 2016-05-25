@@ -1,8 +1,6 @@
 <?php
 /**
- * $Id$
- *
- * Copyright (c) 2008-2009 Andreas Heigl<andreas@heigl.org>
+ * Copyright (c) Andreas Heigl<andreas@heigl.org>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,32 +20,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @category   Org_Heigl
- * @package    Org_Heigl_Ghostscript
- * @subpackage Devices
  * @author     Andreas Heigl <a.heigl@wdv.de>
- * @copyright  2008-2009 Andreas Heigl
+ * @copyright  Andreas Heigl
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version    SVN: $Revision$
- * @since      04.06.2009
  */
 
-/** Org_Heigl_Ghostscript_Device_Abstract */
-require_once 'Org/Heigl/Ghostscript/Device/Abstract.php';
+namespace Org_Heigl\Ghostscript\Device;
 
 /**
  * This class defines interfaces for the PNG-Driver family for Ghostscript
  *
- * @category   Org_Heigl
- * @package    Org_Heigl_Ghostscript
- * @subpackage Devices
  * @author     Andreas Heigl <a.heigl@wdv.de>
  * @copyright  2008-2009 Andreas Heigl
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version    SVN: $Revision$
- * @since      04.06.2009
  */
-class Org_Heigl_Ghostscript_Device_Png extends Org_Heigl_Ghostscript_Device_Abstract
+class Png implements DeviceInterface
 {
     /**
      * Exactly what driver shall be used.
@@ -60,11 +47,20 @@ class Org_Heigl_Ghostscript_Device_Png extends Org_Heigl_Ghostscript_Device_Abst
     protected $_device = 'pngalpha';
 
     /**
+     * The Background-Color of the PNG
+     *
+     * @var string $_color
+     */
+    protected $_color = null;
+
+
+    /**
      * Get the name of the device as Ghostscript expects it
      *
      * @return string
      */
-    public function getDevice () {
+    public function getDevice()
+    {
         return $this -> _device;
     }
 
@@ -78,12 +74,12 @@ class Org_Heigl_Ghostscript_Device_Png extends Org_Heigl_Ghostscript_Device_Abst
      *
      * @param string  $device
      *
-     * @return Org_Heigl_Ghostsccript_Driver_Png
+     * @return Png
      */
-    public function setDevice ( $device ) {
-
-        $device = strtolower ( $device );
-        $devices = array (
+    public function setDevice($device)
+    {
+        $device = strtolower($device);
+        $devices = array(
                     'pngalpha',
                     'png16m',
                     'png256',
@@ -91,7 +87,7 @@ class Org_Heigl_Ghostscript_Device_Png extends Org_Heigl_Ghostscript_Device_Abst
                     'pnggray',
                     'pngmono'
                    );
-        if ( ! in_array ( $device, $devices ) ) {
+        if (! in_array($device, $devices)) {
             $this -> _device = 'pngalpha';
         } else {
             $this -> _device = $device;
@@ -105,10 +101,11 @@ class Org_Heigl_Ghostscript_Device_Png extends Org_Heigl_Ghostscript_Device_Abst
      *
      * @return string
      */
-    public function getParameterString () {
-        $string = ' -sDEVICE=' . $this -> getDevice ();
-        if ( ( 'pngalpha' === $this -> getDevice () ) && ( null !== $this -> getBackgroundColor () ) ) {
-            $string .= ' -dBackgroundColor=16#' . $this -> getBackgroundColor ();
+    public function getParameterString()
+    {
+        $string = ' -sDEVICE=' . $this -> getDevice();
+        if (('pngalpha' === $this -> getDevice()) && (null !== $this -> getBackgroundColor())) {
+            $string .= ' -dBackgroundColor=16#' . $this -> getBackgroundColor();
         }
 
         return $string;
@@ -121,11 +118,11 @@ class Org_Heigl_Ghostscript_Device_Png extends Org_Heigl_Ghostscript_Device_Abst
      *
      * @param string $color
      *
-     * @return Org_Heigl_Ghostscript_Device_Png
+     * @return Png
      */
-    public function setBackgroundColor ( $color ) {
-
-        if ( ! preg_match ( '/^[a-fA-F0-9]{6}$/', $color ) ) {
+    public function setBackgroundColor($color)
+    {
+        if (! preg_match('/^[a-fA-F0-9]{6}$/', $color)) {
             $color = null;
         }
 
@@ -139,22 +136,18 @@ class Org_Heigl_Ghostscript_Device_Png extends Org_Heigl_Ghostscript_Device_Abst
      *
      * @return string
      */
-    public function getBackgroundColor () {
+    public function getBackgroundColor()
+    {
         return $this -> _color;
     }
 
-    /**
-     * The Background-Color of the PNG
-     *
-     * @var string $_color
-     */
-    protected $_color = null;
     /**
      * Get the file ending
      *
      * @return string
      */
-    public function getFileEnding () {
+    public function getFileEnding()
+    {
         return 'png';
     }
 }

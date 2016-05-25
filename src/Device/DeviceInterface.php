@@ -1,8 +1,6 @@
 <?php
 /**
- * $Id$
- *
- * Copyright (c) 2008-2009 Andreas Heigl<andreas@heigl.org>
+ * Copyright (c) Andreas Heigl<andreas@heigl.org>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,22 +20,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @category   Org_Heigl
- * @package    Org_Heigl_Ghostscript
- * @subpackage UnitTests
- * @author     Andreas Heigl <andreas@heigl.org>
- * @copyright  2009 Andreas Heigl<andreas@heigl.org>
+ * @author     Andreas Heigl <a.heigl@wdv.de>
+ * @copyright  Andreas Heigl
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version    SVN: $Revision$
- * @since      03.06.2009
  */
 
-define ( 'ORG_HEIGL_LIB_PATH', dirname ( __FILE__ ) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'src' );
-define ( 'ORG_HEIGL_TEST_PATH', dirname ( __FILE__ ) );
+namespace Org_Heigl\Ghostscript\Device;
 
-set_include_path ('.' . PATH_SEPARATOR
-                   . ORG_HEIGL_LIB_PATH . PATH_SEPARATOR
-                   . ORG_HEIGL_TEST_PATH . PATH_SEPARATOR
-                   . get_include_path());
+/**
+ * This abstract class defines interfaces for Ghostscript devices
+ *
+ * @author     Andreas Heigl <a.heigl@wdv.de>
+ * @copyright  2008-2009 Andreas Heigl
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
+ */
+interface DeviceInterface
+{
+    /**
+     * Get the name of the device as Ghostscript expects it
+     *
+     * @return string
+     */
+    public function getDevice();
 
-ini_set ('date.timezone', 'Europe/Berlin');
+    /**
+     * Get the complete parameter string for this device
+     *
+     * @return string
+     */
+    public function getParameterString();
+
+    /**
+     * Get the ending of the file
+     *
+     * @return string
+     */
+    public function getFileEnding();
+}
