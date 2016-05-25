@@ -1,0 +1,84 @@
+sudo: false
+
+language: php
+
+branches:
+  except:
+    - /^release-\d+\.\d+\.\d+.*$/
+    - /^ghgfk-.*$/
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+    - $HOME/.local
+
+env:
+  global:
+    - COMPOSER_ARGS="--no-interaction --ignore-platform-reqs"
+    - SITE_URL: https://heiglandreas.github.io/Org_Heigl_Ghostscript
+    - GH_USER_NAME: "Andreas Heigl"
+    - GH_USER_EMAIL: andreas@heigl.org
+    - GH_REF: github.com:heiglandreas/Org_Heigl_Ghostscript.git
+    - ENCRYPTION_LABEL: "f38516f65eab"
+
+matrix:
+  fast_finish: true
+  include:
+    - php: 5.5
+      env:
+        - DEPS=lowest
+    - php: 5.5
+      env:
+        - DEPS=latest
+    - php: 5.6
+      env:
+        - DEPS=lowest
+    - php: 5.6
+      env:
+        - DEPS=locked
+        - TEST_COVERAGE=true
+        - DEPLOY_DOCS="$(if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then echo -n 'true' ; else echo -n 'false' ; fi)"
+        - PATH="$HOME/.local/bin:$PATH"
+    - php: 5.6
+      env:
+        - DEPS=latest
+    - php: 7
+      env:
+        - DEPS=lowest
+    - php: 7
+      env:
+        - DEPS=latest
+    - php: hhvm 
+      env:
+        - DEPS=lowest
+    - php: hhvm
+      env:
+        - DEPS=latest
+
+notifications:
+  email: andreas@heigl.org
+
+before_install:
+  - travis_retry composer self-update
+  - if [[ $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
+
+install:
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "5.5" ]]; then composer require $COMPOSER_ARGS --dev --no-update "phpunit/phpunit:^4"; fi
+  - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
+  - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
+  - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer require $COMPOSER_ARGS --dev satooshi/php-coveralls ; fi
+  - travis_retry composer install $COMPOSER_ARGS
+  - composer show --installed
+
+script:
+  - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; fi
+  - if [[ $TEST_COVERAGE != 'true' ]]; then composer test ; fi
+  - if [[ $CHECK_CS == 'true' ]]; then composer cs-check ; fi
+  - if [[ $DEPLOY_DOCS == "true" && "$TRAVIS_TEST_RESULT" == "0" ]]; then ./docsinstall.sh ; fi
+
+after_success:
+  - if [[ $DEPLOY_DOCS == "true" ]]; then echo "Preparing to build and deploy documentation" ; ./.builddocs.sh ; echo "Completed deploying documentation" ; fi
+
+
+after_script:
+  - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer upload-coverage ; fi

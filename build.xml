@@ -36,16 +36,6 @@
 -->
 <project name="Org_Heigl_Ghostscript" default="build" basedir=".">
 
-    <taskdef resource="svntask.properties">
-        <classpath>
-            <pathelement location="lib/ant/svnant.jar" />
-            <pathelement location="lib/ant/svnClientAdapter.jar" />
-            <pathelement location="lib/ant/svnjavahl.jar" />
-        </classpath>
-    </taskdef>
-    
-    <!--typedef resource="org/tigris/subversion/svnant/svnantlib.xml" classpath="${basedir}/lib/ant/svnant.jar" /-->
-
     
     <!-- This target deletes all temporary files from the directory -->
     <target name="clean">
