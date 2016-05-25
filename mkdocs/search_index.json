@@ -2,7 +2,7 @@
     "docs": [
         {
             "location": "/", 
-            "text": "Org_Heigl\\Ghostscript\n\n\nA wrapper to the Ghostscript-CLI\n\n\nInstallation\n\n\nThis library is best installed using \ncomposer", 
+            "text": "Org_Heigl\\Ghostscript\n\n\nA wrapper to the Ghostscript-CLI\n\n\nInstallation\n\n\nThis library is best installed using \ncomposer\n\n\nFurther Documentation\n\n\n\n\nAPI (DocBlock)\n\n\nCode-Coverage", 
             "title": "Home"
         }, 
         {
@@ -14,6 +14,26 @@
             "location": "/#installation", 
             "text": "This library is best installed using  composer", 
             "title": "Installation"
+        }, 
+        {
+            "location": "/#further-documentation", 
+            "text": "API (DocBlock)  Code-Coverage", 
+            "title": "Further Documentation"
+        }, 
+        {
+            "location": "/usage/", 
+            "text": "Basic usage\n\n\nConvert a PDF- or Postscript-File to a JPEG\n\n\n?php\nuse Org_Heigl\\Ghostscript\\Ghostscript;\n\n// Create the Ghostscript-Wrapper\n$gs = new Ghostscript ();\n\n// Set the output-device\n$gs-\nsetDevice('jpeg')\n// Set the input file\n   -\nsetInputFile('path/to/my/ps/or/pdf/file')\n// Set the output file that will be created in the same directory as the input\n   -\nsetOutputFile('output')\n// Set the resolution to 96 pixel per inch\n   -\nsetResolution(96)\n// Set Text-antialiasing to the highest level\n   -\nsetTextAntiAliasing(Ghostscript::ANTIALIASING_HIGH);\n// Set the jpeg-quality to 100 (This is device-dependent!)\n   -\ngetDevice()-\nsetQuality(100);\n// convert the input file to an image\nif (true === $gs-\nrender()) {\n    echo 'success';\n} else {\n    echo 'some error occured';\n}", 
+            "title": "Basic Usage"
+        }, 
+        {
+            "location": "/usage/#basic-usage", 
+            "text": "", 
+            "title": "Basic usage"
+        }, 
+        {
+            "location": "/usage/#convert-a-pdf-or-postscript-file-to-a-jpeg", 
+            "text": "?php\nuse Org_Heigl\\Ghostscript\\Ghostscript;\n\n// Create the Ghostscript-Wrapper\n$gs = new Ghostscript ();\n\n// Set the output-device\n$gs- setDevice('jpeg')\n// Set the input file\n   - setInputFile('path/to/my/ps/or/pdf/file')\n// Set the output file that will be created in the same directory as the input\n   - setOutputFile('output')\n// Set the resolution to 96 pixel per inch\n   - setResolution(96)\n// Set Text-antialiasing to the highest level\n   - setTextAntiAliasing(Ghostscript::ANTIALIASING_HIGH);\n// Set the jpeg-quality to 100 (This is device-dependent!)\n   - getDevice()- setQuality(100);\n// convert the input file to an image\nif (true === $gs- render()) {\n    echo 'success';\n} else {\n    echo 'some error occured';\n}", 
+            "title": "Convert a PDF- or Postscript-File to a JPEG"
         }
     ]
 }
