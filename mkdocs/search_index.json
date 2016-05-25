@@ -1,0 +1,19 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "Org_Heigl\\Ghostscript\n\n\nA wrapper to the Ghostscript-CLI\n\n\nInstallation\n\n\nThis library is best installed using \ncomposer", 
+            "title": "Home"
+        }, 
+        {
+            "location": "/#org_heiglghostscript", 
+            "text": "A wrapper to the Ghostscript-CLI", 
+            "title": "Org_Heigl\\Ghostscript"
+        }, 
+        {
+            "location": "/#installation", 
+            "text": "This library is best installed using  composer", 
+            "title": "Installation"
+        }
+    ]
+}

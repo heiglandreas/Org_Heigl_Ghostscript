@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>Org_Heigl\Ghostscript</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">Org_Heigl\Ghostscript</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/Org_Heigl.html">\Org_Heigl</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">2</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-169481117"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-169481117" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1925500949"></a>
+                                <a href="../namespaces/Org_Heigl.html" style="margin-left: 30px; padding-left: 0">Org_Heigl</a>
+            </div>
+            <div id="namespace-1925500949" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-92622068"></a>
+                                <a href="../namespaces/Org_Heigl.Ghostscript.html" style="margin-left: 30px; padding-left: 0">Ghostscript</a>
+            </div>
+            <div id="namespace-92622068" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-493631428"></a>
+                                <a href="../namespaces/Org_Heigl.Ghostscript.Device.html" style="margin-left: 30px; padding-left: 0">Device</a>
+            </div>
+            <div id="namespace-493631428" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/Org_Heigl.Ghostscript.Device.DeviceInterface.html">DeviceInterface</a></li>
+                                                                                                    <li class="class"><a href="../classes/Org_Heigl.Ghostscript.Device.Jpeg.html">Jpeg</a></li>
+                                                    <li class="class"><a href="../classes/Org_Heigl.Ghostscript.Device.Png.html">Png</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html">Ghostscript</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/Org_Heigl.Ghostscript.html">\Org_Heigl\Ghostscript</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\Org_Heigl\Ghostscript</small>Ghostscript</h1>
+                    <p><em>This class contains a wrapper around the Ghostscript-Application.</em></p>
+                    <p>This needs the Ghostscript application to be installed on the server. If the
+gs-executable is not available the class will not be able to execute anything</p>
+<p>A working example might look like the following code:
+<code></p>
+<p>// First we describe the output-format
+$device = new Org_Heigl_Ghostscript_Device_Jpeg ();</p>
+<p>// Set the JPEG-Quality to 100
+$device -&gt; setQuality ( 100 );</p>
+<p>// Next we Create the ghostscript-Wrapper
+$gs = new Org_Heigl_Ghostscript ();</p>
+<p>// Set the device
+$gs -&gt; setDevice ( $device )
+// Set the input file
+-&gt; setInputFile ( 'path/to/my/ps/or/pdf/file' )
+// Set the output file that will be created in the same directory as the input
+-&gt; setOutputFile ( 'output' )
+// Set the resolution to 96 pixel per inch
+-&gt; setResolution ( 96 )
+// Set Text-antialiasing to the highest level
+-&gt; setTextAntiAliasing ( Org_Heigl_Ghostscript::ANTIALIASING_HIGH );</p>
+<p>// convert the input file to an image
+if ( true === $gs -&gt; render () ) {
+echo 'success';
+} else {
+echo 'some error occured';
+}
+</code></p>
+<p>Alternatively the example could read as follows
+<code></p>
+<p>// Create the ghostscript-Wrapper
+$gs = new Org_Heigl_Ghostscript ();</p>
+<p>// Set the device
+$gs -&gt; setDevice ( 'jpeg' )
+// Set the input file
+-&gt; setInputFile ( 'path/to/my/ps/or/pdf/file' )
+// Set the output file that will be created in the same directory as the input
+-&gt; setOutputFile ( 'output' )
+// Set the resolution to 96 pixel per inch
+-&gt; setResolution ( 96 )
+// Set Text-antialiasing to the highest level
+-&gt; setTextAntiAliasing ( Org_Heigl_Ghostscript::ANTIALIASING_HIGH );</p>
+<p>// Set the jpeg-quality to 100
+$gs -&gt; getDevice () -&gt; setQuality ( 100 );</p>
+<p>// convert the input file to an image
+if ( true === $gs -&gt; render () ) {
+echo 'success';
+} else {
+echo 'some error occured';
+}
+</code></p>
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#method_setGsPath" class="">setGsPath()</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#method_getGsPath" class="">getGsPath()</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#method_setInputFile" class="">setInputFile()</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#method_getInputFile" class="">getInputFile()</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#method_setOutputFile" class="">setOutputFile()</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#method_getOutputFile" class="">getOutputFile()</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#method_getBasePath" class="">getBasePath()</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#method_render" class="">render()</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#method_getRenderString" class="">getRenderString()</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#method_isGraphicsAntiAliasingSet" class="">isGraphicsAntiAliasingSet()</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#method_setGraphicsAntiAliasing" class="">setGraphicsAntiAliasing()</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#method_getGraphicsAntiAliasing" class="">getGraphicsAntiAliasing()</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#method_isTextAntiAliasingSet" class="">isTextAntiAliasingSet()</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#method_setTextAntiAliasing" class="">setTextAntiAliasing()</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#method_getTextAntiAliasing" class="">getTextAntiAliasing()</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#method_setResolution" class="">setResolution()</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#method_getResolution" class="">getResolution()</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#method_setDevice" class="">setDevice()</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#method_getDevice" class="">getDevice()</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#method_setUseCie" class="">setUseCie()</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#method_useCie" class="">useCie()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#constant_ANTIALIASING_NONE" class="">ANTIALIASING_NONE</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#constant_ANTIALIASING_LOW" class="">ANTIALIASING_LOW</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#constant_ANTIALIASING_MEDIUM" class="">ANTIALIASING_MEDIUM</a><br />
+                                                                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html#constant_ANTIALIASING_HIGH" class="">ANTIALIASING_HIGH</a><br />
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/Ghostscript.html"><div class="path-wrapper">Ghostscript.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Org_Heigl_Ghostscript</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                    <div class="namespace-wrapper">\Org_Heigl\Ghostscript\Ghostscript</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr>
+                            <th>
+                                category
+                            </th>
+                            <td>
+                                                                    <p>Org_Heigl</p>
+                                                            </td>
+                        </tr>
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>Andreas Heigl <a href="mailto:andreas@heigl.org">andreas@heigl.org</a></p>
+                                                            </td>
+                        </tr>
+                                            <tr>
+                            <th>
+                                copyright
+                            </th>
+                            <td>
+                                                                    <p>2008 Andreas Heigl<a href="mailto:andreas@heigl.org">andreas@heigl.org</a></p>
+                                                            </td>
+                        </tr>
+                                            <tr>
+                            <th>
+                                license
+                            </th>
+                            <td>
+                                                                    <p><a href="http://www.opensource.org/licenses/mit-license.php">http://www.opensource.org/licenses/mit-license.php</a> MIT-License</p>
+                                                            </td>
+                        </tr>
+                                            <tr>
+                            <th>
+                                version
+                            </th>
+                            <td>
+                                                                    
+                                                            </td>
+                        </tr>
+                                            <tr>
+                            <th>
+                                since
+                            </th>
+                            <td>
+                                                                    
+                                                            </td>
+                        </tr>
+                                        </table>
+                </aside>
+            </div>
+
+                                    <a id="constants" name="constants"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Constants</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ANTIALIASING_NONE" name="constant_ANTIALIASING_NONE" class="anchor"></a>
+            <article id="constant_ANTIALIASING_NONE" class="constant">
+                <h3 class="">ANTIALIASING_NONE</h3>
+                <pre class="signature">ANTIALIASING_NONE</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ANTIALIASING_LOW" name="constant_ANTIALIASING_LOW" class="anchor"></a>
+            <article id="constant_ANTIALIASING_LOW" class="constant">
+                <h3 class="">ANTIALIASING_LOW</h3>
+                <pre class="signature">ANTIALIASING_LOW</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ANTIALIASING_MEDIUM" name="constant_ANTIALIASING_MEDIUM" class="anchor"></a>
+            <article id="constant_ANTIALIASING_MEDIUM" class="constant">
+                <h3 class="">ANTIALIASING_MEDIUM</h3>
+                <pre class="signature">ANTIALIASING_MEDIUM</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ANTIALIASING_HIGH" name="constant_ANTIALIASING_HIGH" class="anchor"></a>
+            <article id="constant_ANTIALIASING_HIGH" class="constant">
+                <h3 class="">ANTIALIASING_HIGH</h3>
+                <pre class="signature">ANTIALIASING_HIGH</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                        
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setGsPath" name="method_setGsPath" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setGsPath()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setGsPath(string|null  <span class="argument">$path = null</span>) : string</pre>
+                <p><em>Set the path to the gs-executable and return it.</em></p>
+                <p>This method will be called on load of the class and needs not to be
+called during normal operation.</p>
+<p>If you have Ghostscript installed in a non-standard-location that can not
+be found via the 'which gs' command, you have to set the path manualy</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string|null</td>
+                                <td>$path </td>
+                                <td><p>The path to set</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getGsPath" name="method_getGsPath" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getGsPath()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getGsPath() : string</pre>
+                <p><em>Get the currently set path for the ghostscript-app</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setInputFile" name="method_setInputFile" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setInputFile()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setInputFile(string|\Org_Heigl\Ghostscript\SplFileInfo  <span class="argument">$file</span>) : \Org_Heigl\Ghostscript\Ghostscript</pre>
+                <p><em>Set the file that shall be processes</em></p>
+                <p>This should be a PostScript (ps), Enhanced Postscript (eps) or
+PortableDocumentformat (pdf) File.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string|\Org_Heigl\Ghostscript\SplFileInfo</td>
+                                <td>$file </td>
+                                <td><p>The File to use as input.</p></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Org_Heigl\Ghostscript\InvalidArgumentException</dt>
+                            <dd><p>when the provided file is not supported</p></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html">\Org_Heigl\Ghostscript\Ghostscript</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getInputFile" name="method_getInputFile" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getInputFile()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getInputFile() : \Org_Heigl\Ghostscript\SplFileInfo</pre>
+                <p><em>Get the file that shall be processed</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \Org_Heigl\Ghostscript\SplFileInfo
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setOutputFile" name="method_setOutputFile" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setOutputFile()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setOutputFile(string  <span class="argument">$name = &#039;output&#039;</span>) : \Org_Heigl\Ghostscript\Ghostscript</pre>
+                <p><em>Set the name of the output file(s)</em></p>
+                <p>This name does not need a file-extension as that is set from the output
+format.</p>
+<p>The name can contain a placeholder like '%d' or '%02d'. This will be
+replaced by the pagenumber of the processed page. For more information
+on the format see the PHP documentation for sprintf</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$name </td>
+                                <td><p>The filename</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html">\Org_Heigl\Ghostscript\Ghostscript</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getOutputFile" name="method_getOutputFile" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getOutputFile()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getOutputFile() : string</pre>
+                <p><em>Get the output filename.</em></p>
+                <p>This is NOT the name the file can be retrieved with as Ghostscript can
+modify the filename, but the returned string containes the directory the
+file(s) reside in.</p>
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getBasePath" name="method_getBasePath" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getBasePath()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getBasePath() : string</pre>
+                <p><em>Get the basepath of the execution.</em></p>
+                <p>Thisis set to the directory containing <var>$_infile</var>.</p>
+<p>If <var>$_infile</var> is not set, it is set to the systems default
+tmp-directory.</p>
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_render" name="method_render" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">render()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">render() : boolean</pre>
+                <p><em>Render the input file via Ghostscript</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getRenderString" name="method_getRenderString" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getRenderString()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getRenderString() : string</pre>
+                <p><em>Get the command-line that can be executed via exec</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_isGraphicsAntiAliasingSet" name="method_isGraphicsAntiAliasingSet" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">isGraphicsAntiAliasingSet()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">isGraphicsAntiAliasingSet() : boolean</pre>
+                <p><em>Check whether Anti ALiasing for graphics is set</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setGraphicsAntiAliasing" name="method_setGraphicsAntiAliasing" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setGraphicsAntiAliasing()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setGraphicsAntiAliasing(integer  <span class="argument">$level</span>) : \Org_Heigl\Ghostscript\Ghostscript</pre>
+                <p><em>Set graphics-AntiAliasing</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$level </td>
+                                <td><p>The AntiaAliasing level to set.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html">\Org_Heigl\Ghostscript\Ghostscript</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getGraphicsAntiAliasing" name="method_getGraphicsAntiAliasing" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getGraphicsAntiAliasing()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getGraphicsAntiAliasing() : integer</pre>
+                <p><em>Get the text-AntiAliasing level</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    integer
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_isTextAntiAliasingSet" name="method_isTextAntiAliasingSet" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">isTextAntiAliasingSet()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">isTextAntiAliasingSet() : boolean</pre>
+                <p><em>Check whether Anti ALiasing for text is set</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setTextAntiAliasing" name="method_setTextAntiAliasing" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setTextAntiAliasing()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setTextAntiAliasing(integer  <span class="argument">$level</span>) : \Org_Heigl\Ghostscript\Ghostscript</pre>
+                <p><em>Set text-AntiAliasing</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$level </td>
+                                <td><p>The AntiaAliasing level to set.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html">\Org_Heigl\Ghostscript\Ghostscript</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getTextAntiAliasing" name="method_getTextAntiAliasing" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getTextAntiAliasing()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getTextAntiAliasing() : integer</pre>
+                <p><em>Get the text-AntiAliasing level</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    integer
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setResolution" name="method_setResolution" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setResolution()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setResolution(  <span class="argument">$horizontal</span>,   <span class="argument">$vertical = null</span>) : \Org_Heigl\Ghostscript\Ghostscript</pre>
+                <p><em>Set the resolution for the rendering</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$horizontal </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$vertical </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html">\Org_Heigl\Ghostscript\Ghostscript</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getResolution" name="method_getResolution" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getResolution()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getResolution() : string</pre>
+                <p><em>Get the resolution</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setDevice" name="method_setDevice" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setDevice()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setDevice(\Org_Heigl\Ghostscript\Device\DeviceInterface|string  <span class="argument">$device</span>) : \Org_Heigl\Ghostscript\Ghostscript</pre>
+                <p><em>Set the output-device</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/Org_Heigl.Ghostscript.Device.DeviceInterface.html">\Org_Heigl\Ghostscript\Device\DeviceInterface</a>|string</td>
+                                <td>$device </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/Org_Heigl.Ghostscript.Ghostscript.html">\Org_Heigl\Ghostscript\Ghostscript</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___construct" name="method___construct" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__construct()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__construct() : void</pre>
+                <p><em>Create a new Instance of the Ghostscript wrapper.</em></p>
+                <p>The new Instance will use a jpeg-device as default</p>
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getDevice" name="method_getDevice" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getDevice()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getDevice() : \Org_Heigl\Ghostscript\Org_Heigl_Ghostscript_Device_Abstract</pre>
+                <p><em>Get the device-object</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \Org_Heigl\Ghostscript\Org_Heigl_Ghostscript_Device_Abstract
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setUseCie" name="method_setUseCie" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setUseCie()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setUseCie(  <span class="argument">$useCie = true</span>) : \Org_Heigl\Ghostscript\Org_Heigl_Ghostscript</pre>
+                <p><em>Set whether to use the CIE-Map for conversion between CMYK and RGB or not</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$useCie </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \Org_Heigl\Ghostscript\Org_Heigl_Ghostscript
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_useCie" name="method_useCie" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">useCie()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">useCie() : boolean</pre>
+                <p><em>Shall we use the CIE map for color-conversions?</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">Ghostscript.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/Ghostscript.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/Org_Heigl.html">\Org_Heigl</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on May 25th, 2016 at 07:34.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>
