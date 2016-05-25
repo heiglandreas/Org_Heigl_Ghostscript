@@ -74,7 +74,7 @@ script:
   - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; fi
   - if [[ $TEST_COVERAGE != 'true' ]]; then composer test ; fi
   - if [[ $CHECK_CS == 'true' ]]; then composer cs-check ; fi
-  - if [[ $DEPLOY_DOCS == "true" && "$TRAVIS_TEST_RESULT" == "0" ]]; then ./docsinstall.sh ; fi
+  - if [[ $DEPLOY_DOCS == "true" && "$TRAVIS_TEST_RESULT" == "0" ]]; then ./docsinstall.sh; composer api; fi
 
 after_success:
   - if [[ $DEPLOY_DOCS == "true" ]]; then echo "Preparing to build and deploy documentation" ; ./.builddocs.sh ; echo "Completed deploying documentation" ; fi

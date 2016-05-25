@@ -1,5 +1,8 @@
 # Org_Heigl\Ghostscript
 
+[![Build Status](https://travis-ci.org/heiglandreas/Org_Heigl_Ghostscript.svg?branch=master)](https://travis-ci.org/heiglandreas/Org_Heigl_Ghostscript)
+[![Coverage Status](https://coveralls.io/repos/github/heiglandreas/Org_Heigl_Ghostscript/badge.svg?branch=master)](https://coveralls.io/github/heiglandreas/Org_Heigl_Ghostscript?branch=master)
+
 A PHP-wrapper to the Ghostscript-CLI
 
 ## Installation:                                                              |
