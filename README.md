@@ -15,6 +15,23 @@ Multipaged PDF-Files will create multiple images! To not overwrite your image-fi
 the filename will be passed to sprintf to create a filename containing the
 number of the page. The one and only parameter will be the number of the page.
 
+## Why another Ghostscript-Wrapper?
+
+There are currently 2 other wrappers around that both didn't meet the requirements
+I had:
+
+ * [gravitymedia/ghostscript](https://packagist.org/packages/gravitymedia/ghostscript)
+ * [alchemy/ghostscript](https://packagist.org/packages/alchemy/ghostscript)
+
+While the gravitymedia library concentrates more on creating PDFs from input-media
+the alchemy library is not easily extendable and doesn't handle the parameters to
+finetune Ghostscript the way I needed them.
+
+So this library tries to handle most of the important switches to ghostscript and
+also allows you to extend the library by implementing your own driver using the
+```DriverInterface```. More information on that will be shown in the
+[Documentation](https://heiglandreas.github.io/Org_Heigl_Ghostscript)
+
 ## Installation
 
 This package is best installed using [composer](https://getcomposer.org).
