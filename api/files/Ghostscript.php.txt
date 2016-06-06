@@ -142,6 +142,10 @@ class Ghostscript
                                           'application/ps',
                                          );
 
+    protected $pageStart = null;
+
+    protected $pageEnd = null;
+
     /**
      * Set the path to the gs-executable and return it.
      *
@@ -319,9 +323,30 @@ class Ghostscript
         if ($this -> isGraphicsAntiAliasingSet()) {
             $string .= ' -dGraphicsAlphaBits=' . $this -> getGraphicsAntiAliasing();
         }
+
+        $string .= $this->getPageRangeString();
+
         $string .= ' "' . $this -> getInputFile() . '"';
         return $string;
     }
+
+    public function getPageRangeString()
+    {
+        if (null === $this->pageStart) {
+            return '';
+        }
+
+        $string = ' -dFirstPage=%d -dLastPage=%d';
+
+        $pageStart = $this->pageStart;
+        $pageEnd = $this->pageEnd;
+        if (null === $this->pageEnd) {
+            $pageEnd = $this->pageStart;
+        }
+
+        return sprintf($string, $pageStart, $pageEnd);
+    }
+
     /**
      * Check whether Anti ALiasing for graphics is set
      *
@@ -521,6 +546,25 @@ class Ghostscript
      {
          return (bool) $this -> _useCie;
      }
+
+    /**
+     * Set a page-Range
+     *  
+     * @param $startPage
+     * @param $endPage
+     *
+     * @return self
+     */
+    public function setPages($startPage, $endPage = null)
+    {
+        $this->pageStart = (int) $startPage;
+
+        if (null !== $endPage) {
+            $this->pageEnd = (int) $endPage;
+        }
+
+        return $this;
+    }
 
      /**
       * Store whether to use CIE for color conversion or not
