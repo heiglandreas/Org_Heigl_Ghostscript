@@ -200,4 +200,22 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
         $this -> assertTrue($f -> render());
         unlink(dirname($filename) . DIRECTORY_SEPARATOR . 'output.png');
     }
+
+    public function testSettingPages()
+    {
+        $f = new Ghostscript();
+        $this->assertAttributeEquals(null, 'pageStart', $f);
+        $this->assertAttributeEquals(null, 'pageEnd', $f);
+        $this->assertEmpty($f->getPageRangeString());
+
+        $f->setPages(2);
+        $this->assertAttributeEquals(2, 'pageStart', $f);
+        $this->assertAttributeEquals(null, 'pageEnd', $f);
+        $this->assertEquals(' -dFirstPage=2 -dLastPage=2', $f->getPageRangeString());
+
+        $f->setPages(3,4);
+        $this->assertAttributeEquals(3, 'pageStart', $f);
+        $this->assertAttributeEquals(4, 'pageEnd', $f);
+        $this->assertEquals(' -dFirstPage=3 -dLastPage=4', $f->getPageRangeString());
+    }
 }
