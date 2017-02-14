@@ -67,6 +67,10 @@ matrix:
     - php: hhvm
       env:
         - DEPS=latest
+    allow_failures:
+        - php: hhvm
+        - php: nightly
+        - php: 5.5
 
 notifications:
   email: andreas@heigl.org
