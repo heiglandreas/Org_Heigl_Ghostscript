@@ -87,9 +87,8 @@ class Png implements DeviceInterface
                     'pnggray',
                     'pngmono',
                    ];
-        if (! in_array($device, $devices)) {
-            $this -> _device = 'pngalpha';
-        } else {
+        $this->_device = 'pngalpha';
+        if (in_array($device, $devices)) {
             $this -> _device = $device;
         }
 

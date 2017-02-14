@@ -47,11 +47,11 @@ matrix:
         - DEPS=lowest
     - php: 7.1
       env:
-        - DEPS=locked
-        - TEST_COVERAGE=true
-        - WITH_CS=true
-        - DEPLOY_DOCS="$(if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then echo -n 'true' ; else echo -n 'false' ; fi)"
-        - PATH="$HOME/.local/bin:$PATH"
+      - DEPS=locked
+      - TEST_COVERAGE=true
+      - WITH_CS=true
+      - DEPLOY_DOCS="$(if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then echo -n 'true' ; else echo -n 'false' ; fi)"
+      - PATH="$HOME/.local/bin:$PATH"
     - php: 7.1
       env:
        - DEPS=latest
@@ -67,10 +67,10 @@ matrix:
     - php: hhvm
       env:
         - DEPS=latest
-    allow_failures:
-        - php: hhvm
-        - php: nightly
-        - php: 5.5
+  allow_failures:
+      - php: hhvm
+      - php: nightly
+      - php: 5.5
 
 notifications:
   email: andreas@heigl.org

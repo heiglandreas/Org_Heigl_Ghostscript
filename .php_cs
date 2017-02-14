@@ -18,8 +18,4 @@ $config = PhpCsFixer\Config::create()
     ])
     ->setFinder($finder);
 
-if (getenv('TRAVIS')) {
-    $config->setCacheFile(getenv('HOME') . '/.php-cs-fixer/.php_cs.cache');
-}
-
 return $config;
