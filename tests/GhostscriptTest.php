@@ -138,10 +138,10 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
         $this -> assertEquals(2, $f -> getTextAntiAliasing());
         $f -> setTextAntiAliasing(Ghostscript::ANTIALIASING_LOW);
         $this -> assertTrue($f -> isTextAntiAliasingSet());
-        $this -> assertEquals(1, $f -> getTextAntiAliasing());
+        $this -> assertEquals(2, $f -> getTextAntiAliasing());
         $f -> setTextAntiAliasing(Ghostscript::ANTIALIASING_NONE);
-        $this -> assertFalse($f -> isTextAntiAliasingSet());
-        $this -> assertEquals(0, $f -> getTextAntiAliasing());
+        $this -> assertTrue($f -> isTextAntiAliasingSet());
+        $this -> assertEquals(1, $f -> getTextAntiAliasing());
     }
 
     public function testGraphicsAntiAliasing()
@@ -159,11 +159,11 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
         $this -> assertEquals(2, $f -> getGraphicsAntiAliasing());
         $this -> assertTrue($f -> isGraphicsAntiAliasingSet());
         $f -> setGraphicsAntiAliasing(Ghostscript::ANTIALIASING_LOW);
-        $this -> assertEquals(1, $f -> getGraphicsAntiAliasing());
+        $this -> assertEquals(2, $f -> getGraphicsAntiAliasing());
         $this -> assertTrue($f -> isGraphicsAntiAliasingSet());
         $f -> setGraphicsAntiAliasing(Ghostscript::ANTIALIASING_NONE);
-        $this -> assertEquals(0, $f -> getGraphicsAntiAliasing());
-        $this -> assertFalse($f -> isGraphicsAntiAliasingSet());
+        $this -> assertEquals(1, $f -> getGraphicsAntiAliasing());
+        $this -> assertTrue($f -> isGraphicsAntiAliasingSet());
     }
 
     public function testRenderingStrings()
@@ -183,10 +183,10 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
         $expect = $path . ' -dSAFER -dQUIET -dNOPLATFONTS -dNOPAUSE -dBATCH -sOutputFile="' . $dir  . 'output.png" -sDEVICE=pngalpha -r72 -dTextAlphaBits=4 -dGraphicsAlphaBits=4 "' .$filename . '"';
         $this -> assertEquals($expect, $f -> getRenderString());
         $f -> setTextAntiAliasing(Ghostscript::ANTIALIASING_NONE);
-        $expect = $path . ' -dSAFER -dQUIET -dNOPLATFONTS -dNOPAUSE -dBATCH -sOutputFile="' . $dir  . 'output.png" -sDEVICE=pngalpha -r72 -dGraphicsAlphaBits=4 "' .$filename . '"';
+        $expect = $path . ' -dSAFER -dQUIET -dNOPLATFONTS -dNOPAUSE -dBATCH -sOutputFile="' . $dir  . 'output.png" -sDEVICE=pngalpha -r72 -dTextAlphaBits=1 -dGraphicsAlphaBits=4 "' .$filename . '"';
         $this -> assertEquals($expect, $f -> getRenderString());
         $f -> setDevice('jpeg');
-        $expect = $path . ' -dSAFER -dQUIET -dNOPLATFONTS -dNOPAUSE -dBATCH -sOutputFile="' . $dir  . 'output.jpeg" -sDEVICE=jpeg -dJPEGQ=75 -dQFactor=0.75 -r72 -dGraphicsAlphaBits=4 "' .$filename . '"';
+        $expect = $path . ' -dSAFER -dQUIET -dNOPLATFONTS -dNOPAUSE -dBATCH -sOutputFile="' . $dir  . 'output.jpeg" -sDEVICE=jpeg -dJPEGQ=75 -dQFactor=0.75 -r72 -dTextAlphaBits=1 -dGraphicsAlphaBits=4 "' .$filename . '"';
         $this -> assertEquals($expect, $f -> getRenderString());
     }
 

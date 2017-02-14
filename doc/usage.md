@@ -2,6 +2,8 @@
 
 ## Convert a PDF- or Postscript-File to a JPEG
 
+This is the basic way of creating a JPEG from a PDF-File
+
 ```
 <?php
 use Org_Heigl\Ghostscript\Ghostscript;

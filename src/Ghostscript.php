@@ -105,20 +105,48 @@ use Org_Heigl\Ghostscript\Device\DeviceInterface;
 class Ghostscript
 {
     /**
-     * This property contains the path to the Ghostscript-Application
+     * No Anti-Aliasing
      *
-     * This is set when the class is first loaded
-     *
-     * @var string PATH
+     * @var int
      */
-    private static $PATH = null;
+    const ANTIALIASING_NONE   = 1;
+
+    /**
+     * Low Anti-Aliasing
+     *
+     * @var int
+     */
+    const ANTIALIASING_LOW    = 2;
+
+    /**
+     * Medium Anti-Aliasing
+     *
+     * @var int
+     * @deprecated As there is no "Medium" Anti-Aliasing. Only None, low and
+     * high
+     */
+    const ANTIALIASING_MEDIUM = 2;
+
+    /**
+     * High Anti-Aliasing
+     *
+     * @var int
+     */
+    const ANTIALIASING_HIGH   = 4;
+
+    /**
+     * Store the resolution
+     *
+     * @var string $_resolution
+     */
+    protected $resolution = 72;
 
     /**
      * This property stores the file to process.
      *
      * @var SplFileInfo $_infile
      */
-    protected $_infile = null;
+    protected $infile = null;
 
     /**
      * This property stores the output-filename.
@@ -129,7 +157,67 @@ class Ghostscript
      *
      * @var string $_outfile
      */
-    protected $_outfile = 'output';
+    protected $outfile = 'output';
+
+    /**
+     * Stores the anti aliasing level
+     *
+     * @var int $_graphicsAntiAliasing
+     */
+    protected $graphicsAntiAliasing = 0;
+
+    /**
+     * Stores the anti aliasing level
+     *
+     * @var int $_textAntiAliasing
+     */
+    protected $textAntiAliasing = 0;
+
+    /**
+     * Store whether to use CIE for color conversion or not
+     *
+     * @var boolean $_useCie
+     */
+    protected $useCie = false;
+
+    /**
+     * Store any default input-profiles
+     *
+     * @var array $_defaultProfile
+     */
+    protected $defaultProfile = array ();
+
+    /**
+     * Store the deviceProfile to use for oputput
+     *
+     * @var string|null $_deviceProfile
+     */
+    protected $deviceProfile = null;
+
+    /**
+     * Which box shall be used for rendering?
+     *
+     * @var string|null $_useBox
+     */
+    protected $useBox = null;
+
+    /**
+     * On which page shall we start rendering?
+     *
+     * If NULL this will be ignored
+     *
+     * @var int $_pageStart
+     */
+    protected $pageStart = null;
+
+    /**
+     * On which page shall we stop rendering?
+     *
+     * If NULL, this will be ignored
+     *
+     * @var int $_pageEnd
+     */
+    protected $pageEnd = null;
 
     /**
      * Which MIME-Types are supported
@@ -142,9 +230,26 @@ class Ghostscript
                                           'application/ps',
                                          );
 
-    protected $pageStart = null;
+    /**
+     * This property contains the path to the Ghostscript-Application
+     *
+     * This is set when the class is first loaded
+     *
+     * @var string PATH
+     */
+    private static $PATH = null;
 
-    protected $pageEnd = null;
+    /**
+     * Create a new Instance of the Ghostscript wrapper.
+     *
+     * The new Instance will use a jpeg-device as default
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->setDevice('png');
+    }
 
     /**
      * Set the path to the gs-executable and return it.
@@ -169,9 +274,9 @@ class Ghostscript
             $path = $output[0];
         }
         if ($path) {
-            Ghostscript::$PATH = $path;
+            self::$PATH = $path;
         }
-        return Ghostscript::$PATH;
+        return self::$PATH;
     }
 
     /**
@@ -181,7 +286,7 @@ class Ghostscript
      */
     public static function getGsPath()
     {
-        return Ghostscript::$PATH;
+        return self::$PATH;
     }
 
 
@@ -205,11 +310,11 @@ class Ghostscript
             $finfo = new \finfo();
             $mime = $finfo->file($file->getPathName(), FILEINFO_MIME);
             $mime = explode(';', $mime);
-            if (! in_array($mime[0], Ghostscript::$supportedMimeTypes)) {
+            if (! in_array($mime[0], self::$supportedMimeTypes)) {
                 throw new \InvalidArgumentException('The provided file seems not to be of a supported MIME-Type');
             }
         }
-        $this -> _infile = $file;
+        $this -> infile = $file;
         return $this;
     }
 
@@ -220,7 +325,7 @@ class Ghostscript
      */
     public function getInputFile()
     {
-        return $this -> _infile;
+        return $this -> infile;
     }
 
     /**
@@ -242,7 +347,7 @@ class Ghostscript
         if (0 !== strpos($name, DIRECTORY_SEPARATOR)) {
             $name = $this -> getBasePath() . DIRECTORY_SEPARATOR . $name;
         }
-        $this -> _outfile = $name;
+        $this -> outfile = $name;
     }
 
     /**
@@ -256,10 +361,10 @@ class Ghostscript
      */
     public function getOutputFile()
     {
-        if (0 !== strpos($this -> _outfile, DIRECTORY_SEPARATOR)) {
-            return $this -> getBasePath() . DIRECTORY_SEPARATOR . $this -> _outfile;
+        if (0 !== strpos($this -> outfile, DIRECTORY_SEPARATOR)) {
+            return $this -> getBasePath() . DIRECTORY_SEPARATOR . $this -> outfile;
         }
-        return $this -> _outfile;
+        return $this -> outfile;
     }
 
     /**
@@ -274,8 +379,8 @@ class Ghostscript
      */
     public function getBasePath()
     {
-        if (null !== $this -> _infile) {
-            return dirname($this -> _infile);
+        if (null !== $this -> infile) {
+            return dirname($this -> infile);
         }
         return sys_get_temp_dir();
     }
@@ -312,7 +417,7 @@ class Ghostscript
         if (null === $this -> getInputFile()) {
             return '';
         }
-        $string  = Ghostscript::getGsPath();
+        $string  = self::getGsPath();
         $string .= ' -dSAFER -dQUIET -dNOPLATFONTS -dNOPAUSE -dBATCH';
         $string .= ' -sOutputFile="' . $this -> getOutputFile() . '.' . $this -> getDevice() -> getFileEnding() . '"';
         $string.=  $this -> getDevice() -> getParameterString();
@@ -322,6 +427,29 @@ class Ghostscript
         }
         if ($this -> isGraphicsAntiAliasingSet()) {
             $string .= ' -dGraphicsAlphaBits=' . $this -> getGraphicsAntiAliasing();
+        }
+
+
+        if (  true === $this -> useCie () ) {
+            $string .= ' -dUseCIEColor';
+        }
+
+        // Set the Rendered Box.
+        $box = $this -> getBox ();
+        if ( null !== $box ) {
+            $string .= ' -dUse' . ucfirst ( $box ) . 'Box';
+        }
+
+        // Set files for ColorManagement.
+        // As of GS 8.71 there should be a different way to do that.
+        if ( $this -> defaultProfile ) {
+            foreach ( $this -> defaultProfile as $profile ) {
+                $string .= ' "' . $profile . '"';
+            }
+        }
+        $deviceProfile = $this -> getDeviceProfile ();
+        if ( false !== $deviceProfile ) {
+            $string .= ' "' . $deviceProfile . '"';
         }
 
         $string .= $this->getPageRangeString();
@@ -354,7 +482,7 @@ class Ghostscript
      */
     public function isGraphicsAntiAliasingSet()
     {
-        if (0 < $this -> _graphicsAntiAliasing) {
+        if (0 < $this -> graphicsAntiAliasing) {
             return true;
         }
         return false;
@@ -370,17 +498,12 @@ class Ghostscript
     public function setGraphicsAntiAliasing($level)
     {
         if ($level === 0 || $level === 1 || $level === 2 || $level === 4) {
-            $this -> _graphicsAntiAliasing = $level;
+            $this -> graphicsAntiAliasing = $level;
         }
         return $this;
     }
 
-    /**
-     * Stores the anti aliasing level
-     *
-     * @var int $_graphicsAntiAliasing
-     */
-    protected $_graphicsAntiAliasing = 0;
+
 
     /**
      * Get the text-AntiAliasing level
@@ -389,7 +512,7 @@ class Ghostscript
      */
     public function getGraphicsAntiAliasing()
     {
-        return $this -> _graphicsAntiAliasing;
+        return $this -> graphicsAntiAliasing;
     }
 
 
@@ -400,7 +523,7 @@ class Ghostscript
      */
     public function isTextAntiAliasingSet()
     {
-        if (0 < $this -> _textAntiAliasing) {
+        if (0 < $this -> textAntiAliasing) {
             return true;
         }
         return false;
@@ -416,17 +539,10 @@ class Ghostscript
     public function setTextAntiAliasing($level)
     {
         if ($level === 0 || $level === 1 || $level === 2 || $level === 4) {
-            $this -> _textAntiAliasing = $level;
+            $this -> textAntiAliasing = $level;
         }
         return $this;
     }
-
-    /**
-     * Stores the anti aliasing level
-     *
-     * @var int $_textAntiAliasing
-     */
-    protected $_textAntiAliasing = 0;
 
     /**
      * Get the text-AntiAliasing level
@@ -435,13 +551,8 @@ class Ghostscript
      */
     public function getTextAntiAliasing()
     {
-        return $this -> _textAntiAliasing;
+        return $this -> textAntiAliasing;
     }
-
-    const ANTIALIASING_NONE   = 0;
-    const ANTIALIASING_LOW    = 1;
-    const ANTIALIASING_MEDIUM = 2;
-    const ANTIALIASING_HIGH   = 4;
 
     /**
      * Set the resolution for the rendering
@@ -454,20 +565,13 @@ class Ghostscript
     public function setResolution($horizontal, $vertical = null)
     {
         if (null !== $vertical) {
-            $this -> _resolution = $horizontal . 'x' . $vertical;
+            $this -> resolution = $horizontal . 'x' . $vertical;
         } else {
-            $this -> _resolution = $horizontal;
+            $this -> resolution = $horizontal;
         }
 
         return $this;
     }
-
-    /**
-     * Store the resolution
-     *
-     * @var string $_resolution
-     */
-    protected $_resolution = 72;
 
     /**
      * Get the resolution
@@ -476,7 +580,7 @@ class Ghostscript
      */
     public function getResolution()
     {
-        return $this -> _resolution;
+        return $this -> resolution;
     }
 
     /**
@@ -492,26 +596,7 @@ class Ghostscript
             $classname = 'Org_Heigl\\Ghostscript\\Device\\' . ucfirst(strtolower($device));
             $device = new $classname();
         }
-        $this -> _device = $device;
-    }
-
-    /**
-     * Which device shall be used to render the input file
-     *
-     * @var Org_Heigl_Ghostscript_Device_Abstract $_device
-     */
-    protected $_device = null;
-
-    /**
-     * Create a new Instance of the Ghostscript wrapper.
-     *
-     * The new Instance will use a jpeg-device as default
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->setDevice('png');
+        $this -> device = $device;
     }
 
     /**
@@ -521,7 +606,7 @@ class Ghostscript
      */
     public function getDevice()
     {
-        return $this -> _device;
+        return $this -> device;
     }
 
     /**
@@ -533,7 +618,7 @@ class Ghostscript
      */
      public function setUseCie($useCie = true)
      {
-         $this -> _useCie = (bool) $useCie;
+         $this -> useCie = (bool) $useCie;
          return $this;
      }
 
@@ -544,8 +629,196 @@ class Ghostscript
       */
      public function useCie()
      {
-         return (bool) $this -> _useCie;
+         return (bool) $this -> useCie;
      }
+
+    /**
+     * Which Box shall be used to generate the output from.
+     *
+     * This can be one of
+     *  - crop
+     *  - media
+     *
+     *  @param string $box The box to use
+     *
+     *  @return Org_Heigl_Ghostscript
+     */
+    public function useBox ( $box ) {
+
+        $box = strtolower ( $box );
+        switch ( $box ) {
+            case 'crop':
+            case 'media':
+            case 'trim':
+                $this -> useBox = $box;
+                break;
+            default:
+                $this -> useBox = null;
+                break;
+        }
+        return $this;
+    }
+
+    /**
+     * Get the name of the box to be used for rendering
+     *
+     * This returns either 'crop' or 'media' if one of these boxes shall be
+     * rendered or NULL if the switch shall not be set.
+     *
+     * @return string|null
+     */
+    public function getBox () {
+        return $this -> useBox;
+    }
+
+    /**
+     * Add the given Profile for Color-Management as Input-Profile.
+     *
+     * The Profile will be added as CSA-File to perform the translation of
+     * Colors from the Input-File to the Internal ProcessColosSpace.
+     *
+     * The CSA-File can be created via the OpenSource-Tool icc2ps from the
+     * littleCMS-Package available at http://www.littlecms.org
+     *
+     * The CSA-File can be generated via the following command from any
+     * icc-file:
+     * <code>
+     * icc2ps -i <input.icc> > output.csa
+     * </code>
+     * This gerneated CSA-File has to be adapted according to the following
+     * example:
+     * <code>
+     * currentglobal true setglobal
+     * /DefaultCMYK
+     * [ /CIEBasedDEFG
+     * <<
+     *  ...
+     *  ...
+     * >>
+     * ] /ColorSpace defineresource pop
+     * setglobal
+     * </code>
+     * where the Part in the brackets is the part that is generated from the
+     * icc2ps-tool.
+     *
+     * For more Information on Color-Conversion and Color-Management refer to
+     * the Homepage of ghostscript, the ICC or have a look at a Search-Engine.
+     *
+     * @param string $profile The Name of the CSA-Profile to use or the complete
+     * path to an appropriate CSA-File.
+     * @param string $space   The Color-Space to set the profile for. This can
+     * be one of 'rgb', 'cmyk' or 'gray'. This parameter is currently not
+     * supported!
+     *
+     * @see http://www.littlecms.org
+     * @see http://www.ghostscript.com
+     * @return Org_Heigl_Ghostscript
+     */
+    public function setDefaultProfile ( $profile, $space = null ) {
+        $space = strtolower ( $space );
+        if ( ! in_array ( $space , array ( 'cmyk', 'rgb', 'gray' ) ) ) {
+            $space = 'cmyk';
+        }
+        if ( file_exists ( $profile ) ) {
+            $this -> defaultProfile[$space] = $profile;
+        }
+        return $this;
+    }
+
+    /**
+     * Get the default Input-Profile
+     *
+     * @return string|false
+     */
+    public function getDefaultProfile ( $space = 'cmyk' ) {
+        if ( isset ( $this -> defaultProfile[$space] ) ) {
+            return $this -> defautProfile[$space];
+        }
+        return false;
+    }
+
+    /**
+     * Add the given Profile for Color-Management as Device-Output-Profile.
+     *
+     * The Profile will be added as CRD-File to perform the translation of
+     * Colors from the Internal ProcessColorSpace to the Output-File.
+     *
+     * The CRD-File can be created via the OpenSource-Tool icc2ps from the
+     * littleCMS-Package available at http://www.littlecms.org
+     *
+     * The CRD-File can be generated via the following command from any
+     * icc-file:
+     * <code>
+     * icc2ps -o <input.icc> > output.crd
+     * </code>
+     * This gerneated CRD-File has to be adapted by appeding the following
+     * line to it:
+     * <code>
+     * /Current /ColorRendering findresource setcolorrendering
+     * </code>
+     *
+     * For more Information on Color-Conversion and Color-Management refer to
+     * the Homepage of ghostscript, the ICC or have a look at a Search-Engine.
+     *
+     * @param string $profile The Name of the CRD-Profile to use or the complete
+     * path to an appropriate CRD-File.
+     *
+     * @see http://www.littlecms.org
+     * @see http://www.ghostscript.com
+     * @return Org_Heigl_Ghostscript
+     */
+    public function setDeviceProfile ( $profile ) {
+
+        if ( file_exists ( $profile ) ) {
+            $this -> deviceProfile = $profile;
+        }
+        return $this;
+    }
+
+    /**
+     * Get the currently set device-Profile
+     *
+     * @return string|false
+     */
+    public function getDeviceProfile () {
+        if ( null === $this -> deviceProfile )
+        {
+            return false;
+        }
+        return $this -> deviceProfile;
+    }
+
+    /**
+     * Set the page to start rendering
+     *
+     * @param int $page
+     *
+     * @return self
+     */
+    public function setPageStart ( $page )
+    {
+        if ( null !== $page ) {
+            $page = (int) $page;
+        }
+        $this -> pageStart = $page;
+        return $this;
+    }
+
+    /**
+     * Set the page to stop rendering
+     *
+     * @param int $page
+     *
+     * @return self
+     */
+    public function setPageEnd ( $page )
+    {
+        if ( null !== $page ) {
+            $page = (int) $page;
+        }
+        $this -> pageEnd = $page;
+        return $this;
+    }
 
     /**
      * Set a page-Range
@@ -565,13 +838,6 @@ class Ghostscript
 
         return $this;
     }
-
-     /**
-      * Store whether to use CIE for color conversion or not
-      *
-      * @var boolean $_useCie
-      */
-     protected $_useCie = false;
 }
 
 Ghostscript::setGsPath();
