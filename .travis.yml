@@ -49,6 +49,7 @@ matrix:
       env:
         - DEPS=locked
         - TEST_COVERAGE=true
+        - WITH_CS=true
         - DEPLOY_DOCS="$(if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then echo -n 'true' ; else echo -n 'false' ; fi)"
         - PATH="$HOME/.local/bin:$PATH"
     - php: 7.1
@@ -87,6 +88,8 @@ script:
   - if [[ $TEST_COVERAGE != 'true' ]]; then composer test ; fi
   - if [[ $CHECK_CS == 'true' ]]; then composer cs-check ; fi
   - if [[ $DEPLOY_DOCS == "true" && "$TRAVIS_TEST_RESULT" == "0" ]]; then ./docsinstall.sh; composer api; fi
+  - if [[ "$WITH_CS" == "true" ]]; then vendor/bin/php-cs-fixer fix --verbose --diff --dry-run; fi
+
 
 after_success:
   - if [[ $DEPLOY_DOCS == "true" ]]; then echo "Preparing to build and deploy documentation" ; ./.builddocs.sh ; echo "Completed deploying documentation" ; fi

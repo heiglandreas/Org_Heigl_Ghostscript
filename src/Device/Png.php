@@ -79,14 +79,14 @@ class Png implements DeviceInterface
     public function setDevice($device)
     {
         $device = strtolower($device);
-        $devices = array(
+        $devices = [
                     'pngalpha',
                     'png16m',
                     'png256',
                     'png16',
                     'pnggray',
-                    'pngmono'
-                   );
+                    'pngmono',
+                   ];
         if (! in_array($device, $devices)) {
             $this -> _device = 'pngalpha';
         } else {

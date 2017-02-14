@@ -213,7 +213,7 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
         $this->assertAttributeEquals(null, 'pageEnd', $f);
         $this->assertEquals(' -dFirstPage=2 -dLastPage=2', $f->getPageRangeString());
 
-        $f->setPages(3,4);
+        $f->setPages(3, 4);
         $this->assertAttributeEquals(3, 'pageStart', $f);
         $this->assertAttributeEquals(4, 'pageEnd', $f);
         $this->assertEquals(' -dFirstPage=3 -dLastPage=4', $f->getPageRangeString());

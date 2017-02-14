@@ -185,7 +185,7 @@ class Ghostscript
      *
      * @var array $_defaultProfile
      */
-    protected $defaultProfile = array ();
+    protected $defaultProfile =  [];
 
     /**
      * Store the deviceProfile to use for oputput
@@ -224,11 +224,11 @@ class Ghostscript
      *
      * @var array $supportedMimeTypes
      */
-    private static $supportedMimeTypes = array(
+    private static $supportedMimeTypes = [
                                           'application/eps',
                                           'application/pdf',
                                           'application/ps',
-                                         );
+                                         ];
 
     /**
      * This property contains the path to the Ghostscript-Application
@@ -430,25 +430,25 @@ class Ghostscript
         }
 
 
-        if (  true === $this -> useCie () ) {
+        if (true === $this -> useCie()) {
             $string .= ' -dUseCIEColor';
         }
 
         // Set the Rendered Box.
-        $box = $this -> getBox ();
-        if ( null !== $box ) {
-            $string .= ' -dUse' . ucfirst ( $box ) . 'Box';
+        $box = $this -> getBox();
+        if (null !== $box) {
+            $string .= ' -dUse' . ucfirst($box) . 'Box';
         }
 
         // Set files for ColorManagement.
         // As of GS 8.71 there should be a different way to do that.
-        if ( $this -> defaultProfile ) {
-            foreach ( $this -> defaultProfile as $profile ) {
+        if ($this -> defaultProfile) {
+            foreach ($this -> defaultProfile as $profile) {
                 $string .= ' "' . $profile . '"';
             }
         }
-        $deviceProfile = $this -> getDeviceProfile ();
-        if ( false !== $deviceProfile ) {
+        $deviceProfile = $this -> getDeviceProfile();
+        if (false !== $deviceProfile) {
             $string .= ' "' . $deviceProfile . '"';
         }
 
@@ -643,10 +643,10 @@ class Ghostscript
      *
      *  @return Org_Heigl_Ghostscript
      */
-    public function useBox ( $box ) {
-
-        $box = strtolower ( $box );
-        switch ( $box ) {
+    public function useBox($box)
+    {
+        $box = strtolower($box);
+        switch ($box) {
             case 'crop':
             case 'media':
             case 'trim':
@@ -667,7 +667,8 @@ class Ghostscript
      *
      * @return string|null
      */
-    public function getBox () {
+    public function getBox()
+    {
         return $this -> useBox;
     }
 
@@ -714,12 +715,13 @@ class Ghostscript
      * @see http://www.ghostscript.com
      * @return Org_Heigl_Ghostscript
      */
-    public function setDefaultProfile ( $profile, $space = null ) {
-        $space = strtolower ( $space );
-        if ( ! in_array ( $space , array ( 'cmyk', 'rgb', 'gray' ) ) ) {
+    public function setDefaultProfile($profile, $space = null)
+    {
+        $space = strtolower($space);
+        if (! in_array($space, [ 'cmyk', 'rgb', 'gray' ])) {
             $space = 'cmyk';
         }
-        if ( file_exists ( $profile ) ) {
+        if (file_exists($profile)) {
             $this -> defaultProfile[$space] = $profile;
         }
         return $this;
@@ -730,8 +732,9 @@ class Ghostscript
      *
      * @return string|false
      */
-    public function getDefaultProfile ( $space = 'cmyk' ) {
-        if ( isset ( $this -> defaultProfile[$space] ) ) {
+    public function getDefaultProfile($space = 'cmyk')
+    {
+        if (isset($this -> defaultProfile[$space])) {
             return $this -> defautProfile[$space];
         }
         return false;
@@ -767,9 +770,9 @@ class Ghostscript
      * @see http://www.ghostscript.com
      * @return Org_Heigl_Ghostscript
      */
-    public function setDeviceProfile ( $profile ) {
-
-        if ( file_exists ( $profile ) ) {
+    public function setDeviceProfile($profile)
+    {
+        if (file_exists($profile)) {
             $this -> deviceProfile = $profile;
         }
         return $this;
@@ -780,9 +783,9 @@ class Ghostscript
      *
      * @return string|false
      */
-    public function getDeviceProfile () {
-        if ( null === $this -> deviceProfile )
-        {
+    public function getDeviceProfile()
+    {
+        if (null === $this -> deviceProfile) {
             return false;
         }
         return $this -> deviceProfile;
@@ -795,9 +798,9 @@ class Ghostscript
      *
      * @return self
      */
-    public function setPageStart ( $page )
+    public function setPageStart($page)
     {
-        if ( null !== $page ) {
+        if (null !== $page) {
             $page = (int) $page;
         }
         $this -> pageStart = $page;
@@ -811,9 +814,9 @@ class Ghostscript
      *
      * @return self
      */
-    public function setPageEnd ( $page )
+    public function setPageEnd($page)
     {
-        if ( null !== $page ) {
+        if (null !== $page) {
             $page = (int) $page;
         }
         $this -> pageEnd = $page;
@@ -822,7 +825,7 @@ class Ghostscript
 
     /**
      * Set a page-Range
-     *  
+     *
      * @param $startPage
      * @param $endPage
      *
