@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo 'Something with Ghostscript in it'

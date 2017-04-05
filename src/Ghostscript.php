@@ -225,10 +225,10 @@ class Ghostscript
      * @var array $supportedMimeTypes
      */
     private static $supportedMimeTypes = [
-                                          'application/eps',
-                                          'application/pdf',
-                                          'application/ps',
-                                         ];
+        'application/eps',
+        'application/pdf',
+        'application/ps',
+    ];
 
     /**
      * This property contains the path to the Ghostscript-Application
@@ -267,15 +267,29 @@ class Ghostscript
     public static function setGsPath($path = null)
     {
         if (null === $path) {
-            $path = exec('which gs', $output);
+            exec('which gs', $output);
             if (! $output) {
                 throw new \UnexpectedValueException('No Ghostscript-instance found or running on windows. Please provide Path to the Ghostscript-executable');
             }
             $path = $output[0];
         }
-        if ($path) {
-            self::$PATH = $path;
+
+        if (! $path) {
+            throw new \UnexpectedValueException('No path found');
         }
+
+        if (! is_executable($path)) {
+            throw new \InvalidArgumentException('The given file is not executable');
+        }
+
+        @exec($path . ' -v', $result);
+        $content = implode("\n", $result);
+        if (false === stripos($content, 'ghostscript')) {
+            throw new \InvalidArgumentException('No valid Ghostscript found');
+        }
+
+        self::$PATH = $path;
+
         return self::$PATH;
     }
 
@@ -286,6 +300,9 @@ class Ghostscript
      */
     public static function getGsPath()
     {
+        if (! self::$PATH) {
+            throw new \InvalidArgumentException('No GS-Path set');
+        }
         return self::$PATH;
     }
 
@@ -843,4 +860,7 @@ class Ghostscript
     }
 }
 
-Ghostscript::setGsPath();
+try {
+    Ghostscript::setGsPath();
+} catch (\UnexpectedValueException $e) {
+}
