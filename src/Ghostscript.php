@@ -300,6 +300,9 @@ class Ghostscript
      */
     public static function getGsPath()
     {
+        if (! self::$PATH) {
+            throw new \InvalidArgumentException('No GS-Path set');
+        }
         return self::$PATH;
     }
 
