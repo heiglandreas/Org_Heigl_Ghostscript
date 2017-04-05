@@ -55,14 +55,6 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
         $this -> assertNotEquals(null, $path);
     }
 
-    public function testSettingOfGhostscriptPath()
-    {
-        Ghostscript::setGsPath();
-        $this -> assertEquals(exec('which gs'), Ghostscript::getGsPath());
-        Ghostscript::setGsPath('This/is/a/fake');
-        $this -> assertEquals('This/is/a/fake', Ghostscript::getGsPath());
-    }
-
     /**
      * @expectedException \InvalidArgumentException
      */
@@ -217,5 +209,61 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
         $this->assertAttributeEquals(3, 'pageStart', $f);
         $this->assertAttributeEquals(4, 'pageEnd', $f);
         $this->assertEquals(' -dFirstPage=3 -dLastPage=4', $f->getPageRangeString());
+    }
+
+    /**
+     * @expectedException \UnexpectedValueException
+     * @expectedExceptionMessage No Ghostscript-instance found or running on windows. Please provide Path to the Ghostscript-executable
+     */
+    public function testSettingDefaultGsPathFails()
+    {
+        exec('which gs', $output);
+        if ($output) {
+            $this->markTestSkipped('Can not test due to installed GS');
+        }
+
+        $this->setExpectedExceptionFromAnnotation();
+
+        Ghostscript::setGsPath();
+    }
+
+    public function testSettingDefaultGsPathWorks()
+    {
+        exec('which gs', $output);
+        if (! $output) {
+            $this->markTestSkipped('Can not test due to not installed GS');
+        }
+
+        Ghostscript::setGsPath();
+
+        $this->assertAttributeEquals($output[0], 'PATH', Ghostscript::class);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The given file is not executable
+     */
+    public function testThatSettingPathToNonExecutableFails()
+    {
+        Ghostscript::setGsPath(__DIR__ . '/_assets/nonExecutable');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage No valid Ghostscript found
+     */
+    public function testThatSettingPathToNonGsFails()
+    {
+        Ghostscript::setGsPath(__DIR__ . '/_assets/executableNonGs');
+    }
+
+    public function testThatSettingPathToSomethingGsLikeWorks()
+    {
+        Ghostscript::setGsPath(__DIR__ . '/_assets/executableGs');
+        $this->assertAttributeEquals(
+            __DIR__ . '/_assets/executableGs',
+            'PATH',
+            Ghostscript::class
+        );
     }
 }
