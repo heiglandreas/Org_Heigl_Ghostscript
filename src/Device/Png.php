@@ -61,7 +61,7 @@ class Png implements DeviceInterface
      */
     public function getDevice()
     {
-        return $this -> _device;
+        return $this->_device;
     }
 
     /**
@@ -89,7 +89,7 @@ class Png implements DeviceInterface
                    ];
         $this->_device = 'pngalpha';
         if (in_array($device, $devices)) {
-            $this -> _device = $device;
+            $this->_device = $device;
         }
 
         return $this;
@@ -102,9 +102,9 @@ class Png implements DeviceInterface
      */
     public function getParameterString()
     {
-        $string = ' -sDEVICE=' . $this -> getDevice();
-        if (('pngalpha' === $this -> getDevice()) && (null !== $this -> getBackgroundColor())) {
-            $string .= ' -dBackgroundColor=16#' . $this -> getBackgroundColor();
+        $string = ' -sDEVICE=' . $this->getDevice();
+        if (('pngalpha' === $this->getDevice()) && (null !== $this->getBackgroundColor())) {
+            $string .= ' -dBackgroundColor=16#' . $this->getBackgroundColor();
         }
 
         return $string;
@@ -125,7 +125,7 @@ class Png implements DeviceInterface
             $color = null;
         }
 
-        $this -> _color = $color;
+        $this->_color = $color;
 
         return $this;
     }
@@ -137,7 +137,7 @@ class Png implements DeviceInterface
      */
     public function getBackgroundColor()
     {
-        return $this -> _color;
+        return $this->_color;
     }
 
     /**

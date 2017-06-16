@@ -41,46 +41,46 @@ class PngTest extends \PHPUnit_Framework_TestCase
     public function testCreationOfPngClass()
     {
         $f = new Png();
-        $this -> assertTrue($f instanceof Png);
-        $this -> assertEquals('pngalpha', $f -> getDevice());
+        $this->assertTrue($f instanceof Png);
+        $this->assertEquals('pngalpha', $f->getDevice());
     }
 
     public function testSettingDifferentDevice()
     {
         $f = new Png();
-        $this -> assertEquals('pngalpha', $f ->getDevice());
-        $f -> setDevice('PNG16m');
-        $this -> assertEquals('png16m', $f ->getDevice());
-        $f -> setDevice('jpeg');
-        $this -> assertEquals('pngalpha', $f ->getDevice());
+        $this->assertEquals('pngalpha', $f->getDevice());
+        $f->setDevice('PNG16m');
+        $this->assertEquals('png16m', $f->getDevice());
+        $f->setDevice('jpeg');
+        $this->assertEquals('pngalpha', $f->getDevice());
     }
 
     public function testSettingBackgroundColor()
     {
         $f = new Png();
-        $this -> assertNull($f ->getBackgroundColor());
-        $f -> setBackgroundColor('abcd34');
-        $this -> assertEquals('abcd34', $f ->getBackgroundColor());
-        $f -> setBackgroundColor('orange');
-        $this -> assertNull($f ->getBackgroundColor());
+        $this->assertNull($f->getBackgroundColor());
+        $f->setBackgroundColor('abcd34');
+        $this->assertEquals('abcd34', $f->getBackgroundColor());
+        $f->setBackgroundColor('orange');
+        $this->assertNull($f->getBackgroundColor());
     }
 
     public function testgettingParamString()
     {
         $f = new Png();
-        $this -> assertEquals(' -sDEVICE=pngalpha', $f -> getParameterString());
-        $f -> setDevice('png16');
-        $this -> assertEquals(' -sDEVICE=png16', $f -> getParameterString());
-        $f -> setBackgroundColor('abcd45');
-        $this -> assertEquals(' -sDEVICE=png16', $f -> getParameterString());
-        $f -> setDevice('png');
-        $this -> assertEquals(' -sDEVICE=pngalpha -dBackgroundColor=16#abcd45', $f -> getParameterString());
+        $this->assertEquals(' -sDEVICE=pngalpha', $f->getParameterString());
+        $f->setDevice('png16');
+        $this->assertEquals(' -sDEVICE=png16', $f->getParameterString());
+        $f->setBackgroundColor('abcd45');
+        $this->assertEquals(' -sDEVICE=png16', $f->getParameterString());
+        $f->setDevice('png');
+        $this->assertEquals(' -sDEVICE=pngalpha -dBackgroundColor=16#abcd45', $f->getParameterString());
     }
 
 
     public function testFileEnding()
     {
         $f = new Png();
-        $this -> assertEquals('png', $f -> getFileEnding());
+        $this->assertEquals('png', $f->getFileEnding());
     }
 }

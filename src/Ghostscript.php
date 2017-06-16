@@ -185,7 +185,7 @@ class Ghostscript
      *
      * @var array $_defaultProfile
      */
-    protected $defaultProfile =  [];
+    protected $defaultProfile = [];
 
     /**
      * Store the deviceProfile to use for oputput
@@ -332,7 +332,7 @@ class Ghostscript
                 throw new \InvalidArgumentException('The provided file seems not to be of a supported MIME-Type');
             }
         }
-        $this -> infile = $file;
+        $this->infile = $file;
 
         return $this;
     }
@@ -344,7 +344,7 @@ class Ghostscript
      */
     public function getInputFile()
     {
-        return $this -> infile;
+        return $this->infile;
     }
 
     /**
@@ -364,9 +364,9 @@ class Ghostscript
     public function setOutputFile($name = 'output')
     {
         if (0 !== strpos($name, DIRECTORY_SEPARATOR)) {
-            $name = $this -> getBasePath() . DIRECTORY_SEPARATOR . $name;
+            $name = $this->getBasePath() . DIRECTORY_SEPARATOR . $name;
         }
-        $this -> outfile = $name;
+        $this->outfile = $name;
         
         return $this;
     }
@@ -382,11 +382,11 @@ class Ghostscript
      */
     public function getOutputFile()
     {
-        if (0 !== strpos($this -> outfile, DIRECTORY_SEPARATOR)) {
-            return $this -> getBasePath() . DIRECTORY_SEPARATOR . $this -> outfile;
+        if (0 !== strpos($this->outfile, DIRECTORY_SEPARATOR)) {
+            return $this->getBasePath() . DIRECTORY_SEPARATOR . $this->outfile;
         }
 
-        return $this -> outfile;
+        return $this->outfile;
     }
 
     /**
@@ -401,8 +401,8 @@ class Ghostscript
      */
     public function getBasePath()
     {
-        if (null !== $this -> infile) {
-            return dirname($this -> infile);
+        if (null !== $this->infile) {
+            return dirname($this->infile);
         }
         return sys_get_temp_dir();
     }
@@ -414,7 +414,7 @@ class Ghostscript
      */
     public function render()
     {
-        $renderString = $this -> getRenderString();
+        $renderString = $this->getRenderString();
 
         // We can't render anything without a render string
         if ('' == $renderString) {
@@ -437,47 +437,47 @@ class Ghostscript
      */
     public function getRenderString()
     {
-        if (null === $this -> getInputFile()) {
+        if (null === $this->getInputFile()) {
             return '';
         }
         $string  = self::getGsPath();
         $string .= ' -dSAFER -dQUIET -dNOPLATFONTS -dNOPAUSE -dBATCH';
-        $string .= ' -sOutputFile="' . $this -> getOutputFile() . '.' . $this -> getDevice() -> getFileEnding() . '"';
-        $string.=  $this -> getDevice() -> getParameterString();
-        $string .= ' -r' . $this -> getResolution();
-        if ($this -> isTextAntiAliasingSet()) {
-            $string .= ' -dTextAlphaBits=' . $this -> getTextAntiAliasing();
+        $string .= ' -sOutputFile="' . $this->getOutputFile() . '.' . $this->getDevice()->getFileEnding() . '"';
+        $string .= $this->getDevice()->getParameterString();
+        $string .= ' -r' . $this->getResolution();
+        if ($this->isTextAntiAliasingSet()) {
+            $string .= ' -dTextAlphaBits=' . $this->getTextAntiAliasing();
         }
-        if ($this -> isGraphicsAntiAliasingSet()) {
-            $string .= ' -dGraphicsAlphaBits=' . $this -> getGraphicsAntiAliasing();
+        if ($this->isGraphicsAntiAliasingSet()) {
+            $string .= ' -dGraphicsAlphaBits=' . $this->getGraphicsAntiAliasing();
         }
 
 
-        if (true === $this -> useCie()) {
+        if (true === $this->useCie()) {
             $string .= ' -dUseCIEColor';
         }
 
         // Set the Rendered Box.
-        $box = $this -> getBox();
+        $box = $this->getBox();
         if (null !== $box) {
             $string .= ' -dUse' . ucfirst($box) . 'Box';
         }
 
         // Set files for ColorManagement.
         // As of GS 8.71 there should be a different way to do that.
-        if ($this -> defaultProfile) {
-            foreach ($this -> defaultProfile as $profile) {
+        if ($this->defaultProfile) {
+            foreach ($this->defaultProfile as $profile) {
                 $string .= ' "' . $profile . '"';
             }
         }
-        $deviceProfile = $this -> getDeviceProfile();
+        $deviceProfile = $this->getDeviceProfile();
         if (false !== $deviceProfile) {
             $string .= ' "' . $deviceProfile . '"';
         }
 
         $string .= $this->getPageRangeString();
 
-        $string .= ' "' . $this -> getInputFile() . '"';
+        $string .= ' "' . $this->getInputFile() . '"';
         return $string;
     }
 
@@ -505,7 +505,7 @@ class Ghostscript
      */
     public function isGraphicsAntiAliasingSet()
     {
-        if (0 < $this -> graphicsAntiAliasing) {
+        if (0 < $this->graphicsAntiAliasing) {
             return true;
         }
 
@@ -522,7 +522,7 @@ class Ghostscript
     public function setGraphicsAntiAliasing($level)
     {
         if ($level === 0 || $level === 1 || $level === 2 || $level === 4) {
-            $this -> graphicsAntiAliasing = $level;
+            $this->graphicsAntiAliasing = $level;
         }
 
         return $this;
@@ -537,7 +537,7 @@ class Ghostscript
      */
     public function getGraphicsAntiAliasing()
     {
-        return $this -> graphicsAntiAliasing;
+        return $this->graphicsAntiAliasing;
     }
 
 
@@ -548,7 +548,7 @@ class Ghostscript
      */
     public function isTextAntiAliasingSet()
     {
-        if (0 < $this -> textAntiAliasing) {
+        if (0 < $this->textAntiAliasing) {
             return true;
         }
 
@@ -565,7 +565,7 @@ class Ghostscript
     public function setTextAntiAliasing($level)
     {
         if ($level === 0 || $level === 1 || $level === 2 || $level === 4) {
-            $this -> textAntiAliasing = $level;
+            $this->textAntiAliasing = $level;
         }
 
         return $this;
@@ -578,7 +578,7 @@ class Ghostscript
      */
     public function getTextAntiAliasing()
     {
-        return $this -> textAntiAliasing;
+        return $this->textAntiAliasing;
     }
 
     /**
@@ -592,9 +592,9 @@ class Ghostscript
     public function setResolution($horizontal, $vertical = null)
     {
         if (null !== $vertical) {
-            $this -> resolution = $horizontal . 'x' . $vertical;
+            $this->resolution = $horizontal . 'x' . $vertical;
         } else {
-            $this -> resolution = $horizontal;
+            $this->resolution = $horizontal;
         }
 
         return $this;
@@ -607,7 +607,7 @@ class Ghostscript
      */
     public function getResolution()
     {
-        return $this -> resolution;
+        return $this->resolution;
     }
 
     /**
@@ -623,7 +623,7 @@ class Ghostscript
             $classname = 'Org_Heigl\\Ghostscript\\Device\\' . ucfirst(strtolower($device));
             $device = new $classname();
         }
-        $this -> device = $device;
+        $this->device = $device;
 
         return $this;
     }
@@ -635,7 +635,7 @@ class Ghostscript
      */
     public function getDevice()
     {
-        return $this -> device;
+        return $this->device;
     }
 
     /**
@@ -647,7 +647,7 @@ class Ghostscript
      */
     public function setUseCie($useCie = true)
     {
-        $this -> useCie = (bool) $useCie;
+        $this->useCie = (bool) $useCie;
 
         return $this;
     }
@@ -659,7 +659,7 @@ class Ghostscript
       */
     public function useCie()
     {
-        return (bool) $this -> useCie;
+        return (bool) $this->useCie;
     }
 
     /**
@@ -680,10 +680,10 @@ class Ghostscript
             case 'crop':
             case 'media':
             case 'trim':
-                $this -> useBox = $box;
+                $this->useBox = $box;
                 break;
             default:
-                $this -> useBox = null;
+                $this->useBox = null;
                 break;
         }
 
@@ -700,7 +700,7 @@ class Ghostscript
      */
     public function getBox()
     {
-        return $this -> useBox;
+        return $this->useBox;
     }
 
     /**
@@ -753,7 +753,7 @@ class Ghostscript
             $space = 'cmyk';
         }
         if (file_exists($profile)) {
-            $this -> defaultProfile[$space] = $profile;
+            $this->defaultProfile[$space] = $profile;
         }
 
         return $this;
@@ -766,8 +766,8 @@ class Ghostscript
      */
     public function getDefaultProfile($space = 'cmyk')
     {
-        if (isset($this -> defaultProfile[$space])) {
-            return $this -> defautProfile[$space];
+        if (isset($this->defaultProfile[$space])) {
+            return $this->defautProfile[$space];
         }
 
         return false;
@@ -806,7 +806,7 @@ class Ghostscript
     public function setDeviceProfile($profile)
     {
         if (file_exists($profile)) {
-            $this -> deviceProfile = $profile;
+            $this->deviceProfile = $profile;
         }
 
         return $this;
@@ -819,11 +819,11 @@ class Ghostscript
      */
     public function getDeviceProfile()
     {
-        if (null === $this -> deviceProfile) {
+        if (null === $this->deviceProfile) {
             return false;
         }
 
-        return $this -> deviceProfile;
+        return $this->deviceProfile;
     }
 
     /**
@@ -838,7 +838,7 @@ class Ghostscript
         if (null !== $page) {
             $page = (int) $page;
         }
-        $this -> pageStart = $page;
+        $this->pageStart = $page;
 
         return $this;
     }
@@ -855,7 +855,7 @@ class Ghostscript
         if (null !== $page) {
             $page = (int) $page;
         }
-        $this -> pageEnd = $page;
+        $this->pageEnd = $page;
 
         return $this;
     }
