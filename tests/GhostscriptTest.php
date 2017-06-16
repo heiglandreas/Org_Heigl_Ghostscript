@@ -79,6 +79,28 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('/some/other/test', $f->getOutputFile());
     }
 
+    /**
+     * @dataProvider settingOutfileIsRepresentedInRenderStringProvider
+     */
+    public function testSettingOutfileIsRepresentedInRenderString($outfile, $expectedResultInRenderString)
+    {
+        $f = new Ghostscript();
+        $f->setDevice(new Png());
+        $f->setInputFile(__DIR__ . '/support/test.pdf');
+        $f->setOutputFile($outfile);
+        $this->assertContains($expectedResultInRenderString, $f->getRenderString());
+    }
+
+    public function settingOutfileIsRepresentedInRenderStringProvider()
+    {
+        return [
+            ['test', __DIR__ . '/support/test'],
+            ['/this/is/a/test', '/this/is/a/test'],
+            ['test.jpeg', __DIR__ . '/support/test.jpeg'],
+            ['/this/is/a/test.jpeg', '/this/is/a/test.jpeg'],
+        ];
+    }
+
     public function testDefaultDevice()
     {
         $f = new Ghostscript();

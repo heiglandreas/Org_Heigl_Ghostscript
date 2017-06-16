@@ -442,7 +442,7 @@ class Ghostscript
         }
         $string  = self::getGsPath();
         $string .= ' -dSAFER -dQUIET -dNOPLATFONTS -dNOPAUSE -dBATCH';
-        $string .= ' -sOutputFile="' . $this->getOutputFile() . '.' . $this->getDevice()->getFileEnding() . '"';
+        $string .= ' -sOutputFile="' . $this->getOutputFileName() . '"';
         $string .= $this->getDevice()->getParameterString();
         $string .= ' -r' . $this->getResolution();
         if ($this->isTextAntiAliasingSet()) {
@@ -877,6 +877,17 @@ class Ghostscript
         }
 
         return $this;
+    }
+
+    public function getOutputFileName()
+    {
+        $basename = $this->getOutputFile();
+        $lastDot = strrpos('.', basename($basename));
+        if (false === $lastDot) {
+            return $basename . '.' . $this->getDevice()->getFileEnding();
+        }
+
+        return $basename;
     }
 }
 
