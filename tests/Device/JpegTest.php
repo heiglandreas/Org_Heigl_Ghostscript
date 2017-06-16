@@ -41,39 +41,39 @@ class JpegTest extends \PHPUnit_Framework_TestCase
     public function testCreationOfJpegClass()
     {
         $f = new Jpeg();
-        $this -> assertTrue($f instanceof Jpeg);
-        $this -> assertEquals('jpeg', $f -> getDevice());
+        $this->assertTrue($f instanceof Jpeg);
+        $this->assertEquals('jpeg', $f->getDevice());
     }
 
     public function testSettingQuality()
     {
         $f = new Jpeg();
-        $this -> assertEquals(75, $f -> getQuality());
-        $f -> setQuality(50);
-        $this -> assertEquals(50, $f -> getQuality());
-        $f -> setQuality('200');
-        $this -> assertEquals(100, $f -> getQuality());
-        $f -> setQuality(200);
-        $this -> assertEquals(100, $f -> getQuality());
-        $f -> setQuality(-10);
-        $this -> assertEquals(0, $f -> getQuality());
+        $this->assertEquals(75, $f->getQuality());
+        $f->setQuality(50);
+        $this->assertEquals(50, $f->getQuality());
+        $f->setQuality('200');
+        $this->assertEquals(100, $f->getQuality());
+        $f->setQuality(200);
+        $this->assertEquals(100, $f->getQuality());
+        $f->setQuality(-10);
+        $this->assertEquals(0, $f->getQuality());
     }
 
     public function testgettingParamString()
     {
         $f = new Jpeg();
-        $this -> assertEquals(' -sDEVICE=jpeg -dJPEGQ=75 -dQFactor=0.75', $f -> getParameterString());
-        $f -> setQuality(50);
-        $this -> assertEquals(' -sDEVICE=jpeg -dJPEGQ=50 -dQFactor=0.5', $f -> getParameterString());
-        $f -> setQuality(200);
-        $this -> assertEquals(' -sDEVICE=jpeg -dJPEGQ=100 -dQFactor=1', $f -> getParameterString());
-        $f -> setQuality(-5);
-        $this -> assertEquals(' -sDEVICE=jpeg -dJPEGQ=0 -dQFactor=0', $f -> getParameterString());
+        $this->assertEquals(' -sDEVICE=jpeg -dJPEGQ=75 -dQFactor=0.75', $f->getParameterString());
+        $f->setQuality(50);
+        $this->assertEquals(' -sDEVICE=jpeg -dJPEGQ=50 -dQFactor=0.5', $f->getParameterString());
+        $f->setQuality(200);
+        $this->assertEquals(' -sDEVICE=jpeg -dJPEGQ=100 -dQFactor=1', $f->getParameterString());
+        $f->setQuality(-5);
+        $this->assertEquals(' -sDEVICE=jpeg -dJPEGQ=0 -dQFactor=0', $f->getParameterString());
     }
 
     public function testFileEnding()
     {
         $f = new Jpeg();
-        $this -> assertEquals('jpeg', $f -> getFileEnding());
+        $this->assertEquals('jpeg', $f->getFileEnding());
     }
 }

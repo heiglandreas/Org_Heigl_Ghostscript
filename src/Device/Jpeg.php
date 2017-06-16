@@ -62,9 +62,9 @@ class Jpeg implements DeviceInterface
     public function getParameterString()
     {
         $string = '';
-        $string .= ' -sDEVICE=' . $this -> getDevice();
-        $string .= ' -dJPEGQ=' . $this -> getQuality();
-        $string .= ' -dQFactor=' . 1 / 100 * $this -> getQuality();
+        $string .= ' -sDEVICE=' . $this->getDevice();
+        $string .= ' -dJPEGQ=' . $this->getQuality();
+        $string .= ' -dQFactor=' . 1 / 100 * $this->getQuality();
 
         return $string;
     }
@@ -90,7 +90,7 @@ class Jpeg implements DeviceInterface
             $quality = 0;
         }
 
-        $this -> _quality = $quality;
+        $this->_quality = $quality;
 
         return $this;
     }
@@ -102,7 +102,7 @@ class Jpeg implements DeviceInterface
      */
     public function getQuality()
     {
-        return $this -> _quality;
+        return $this->_quality;
     }
 
     /**
