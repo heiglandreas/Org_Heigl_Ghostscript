@@ -365,6 +365,8 @@ class Ghostscript
             $name = $this -> getBasePath() . DIRECTORY_SEPARATOR . $name;
         }
         $this -> outfile = $name;
+        
+        return $this;
     }
 
     /**
