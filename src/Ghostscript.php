@@ -303,6 +303,7 @@ class Ghostscript
         if (! self::$PATH) {
             throw new \InvalidArgumentException('No GS-Path set');
         }
+
         return self::$PATH;
     }
 
@@ -316,7 +317,7 @@ class Ghostscript
      * @param string|SplFileInfo $file The File to use as input.
      *
      * @throws InvalidArgumentException when the provided file is not supported
-     * @return Ghostscript
+     * @return self
      */
     public function setInputFile($file)
     {
@@ -332,6 +333,7 @@ class Ghostscript
             }
         }
         $this -> infile = $file;
+
         return $this;
     }
 
@@ -383,6 +385,7 @@ class Ghostscript
         if (0 !== strpos($this -> outfile, DIRECTORY_SEPARATOR)) {
             return $this -> getBasePath() . DIRECTORY_SEPARATOR . $this -> outfile;
         }
+
         return $this -> outfile;
     }
 
@@ -423,6 +426,7 @@ class Ghostscript
         if (0 !== $returnValue) {
             return false;
         }
+
         return true;
     }
 
@@ -504,6 +508,7 @@ class Ghostscript
         if (0 < $this -> graphicsAntiAliasing) {
             return true;
         }
+
         return false;
     }
 
@@ -512,13 +517,14 @@ class Ghostscript
      *
      * @param int $level The AntiaAliasing level to set.
      *
-     * @return Ghostscript
+     * @return self
      */
     public function setGraphicsAntiAliasing($level)
     {
         if ($level === 0 || $level === 1 || $level === 2 || $level === 4) {
             $this -> graphicsAntiAliasing = $level;
         }
+
         return $this;
     }
 
@@ -545,6 +551,7 @@ class Ghostscript
         if (0 < $this -> textAntiAliasing) {
             return true;
         }
+
         return false;
     }
 
@@ -553,13 +560,14 @@ class Ghostscript
      *
      * @param int $level The AntiaAliasing level to set.
      *
-     * @return Ghostscript
+     * @return self
      */
     public function setTextAntiAliasing($level)
     {
         if ($level === 0 || $level === 1 || $level === 2 || $level === 4) {
             $this -> textAntiAliasing = $level;
         }
+
         return $this;
     }
 
@@ -579,7 +587,7 @@ class Ghostscript
      * @param int The horizontal resolution to set
      * @param int The vertical resolution to set
      *
-     * @return Ghostscript
+     * @return self
      */
     public function setResolution($horizontal, $vertical = null)
     {
@@ -607,7 +615,7 @@ class Ghostscript
      *
      * @param DeviceInterface|string $device
      *
-     * @return Ghostscript
+     * @return self
      */
     public function setDevice($device)
     {
@@ -616,12 +624,14 @@ class Ghostscript
             $device = new $classname();
         }
         $this -> device = $device;
+
+        return $this;
     }
 
     /**
      * Get the device-object
      *
-     * @return Org_Heigl_Ghostscript_Device_Abstract
+     * @return DeviceInterface
      */
     public function getDevice()
     {
@@ -633,23 +643,24 @@ class Ghostscript
      *
      * @param boolean $useCIE
      *
-     * @return Org_Heigl_Ghostscript
+     * @return self
      */
-     public function setUseCie($useCie = true)
-     {
-         $this -> useCie = (bool) $useCie;
-         return $this;
-     }
+    public function setUseCie($useCie = true)
+    {
+        $this -> useCie = (bool) $useCie;
+
+        return $this;
+    }
 
      /**
       * Shall we use the CIE map for color-conversions?
       *
       * @return boolean
       */
-     public function useCie()
-     {
-         return (bool) $this -> useCie;
-     }
+    public function useCie()
+    {
+        return (bool) $this -> useCie;
+    }
 
     /**
      * Which Box shall be used to generate the output from.
@@ -660,7 +671,7 @@ class Ghostscript
      *
      *  @param string $box The box to use
      *
-     *  @return Org_Heigl_Ghostscript
+     *  @return self
      */
     public function useBox($box)
     {
@@ -675,6 +686,7 @@ class Ghostscript
                 $this -> useBox = null;
                 break;
         }
+
         return $this;
     }
 
@@ -732,7 +744,7 @@ class Ghostscript
      *
      * @see http://www.littlecms.org
      * @see http://www.ghostscript.com
-     * @return Org_Heigl_Ghostscript
+     * @return self
      */
     public function setDefaultProfile($profile, $space = null)
     {
@@ -743,6 +755,7 @@ class Ghostscript
         if (file_exists($profile)) {
             $this -> defaultProfile[$space] = $profile;
         }
+
         return $this;
     }
 
@@ -756,6 +769,7 @@ class Ghostscript
         if (isset($this -> defaultProfile[$space])) {
             return $this -> defautProfile[$space];
         }
+
         return false;
     }
 
@@ -787,13 +801,14 @@ class Ghostscript
      *
      * @see http://www.littlecms.org
      * @see http://www.ghostscript.com
-     * @return Org_Heigl_Ghostscript
+     * @return self
      */
     public function setDeviceProfile($profile)
     {
         if (file_exists($profile)) {
             $this -> deviceProfile = $profile;
         }
+
         return $this;
     }
 
@@ -807,6 +822,7 @@ class Ghostscript
         if (null === $this -> deviceProfile) {
             return false;
         }
+
         return $this -> deviceProfile;
     }
 
@@ -823,6 +839,7 @@ class Ghostscript
             $page = (int) $page;
         }
         $this -> pageStart = $page;
+
         return $this;
     }
 
@@ -839,6 +856,7 @@ class Ghostscript
             $page = (int) $page;
         }
         $this -> pageEnd = $page;
+
         return $this;
     }
 
