@@ -188,7 +188,7 @@ class Ghostscript
     protected $defaultProfile = [];
 
     /**
-     * Store the deviceProfile to use for oputput
+     * Store the deviceProfile to use for output
      *
      * @var string|null $_deviceProfile
      */
@@ -282,7 +282,7 @@ class Ghostscript
             throw new \InvalidArgumentException('The given file is not executable');
         }
 
-        @exec($path . ' -v', $result);
+        @exec("\"{$path}\" -v", $result);
         $content = implode("\n", $result);
         if (false === stripos($content, 'ghostscript')) {
             throw new \InvalidArgumentException('No valid Ghostscript found');
@@ -363,11 +363,7 @@ class Ghostscript
      */
     public function setOutputFile($name = 'output')
     {
-        if (0 !== strpos($name, DIRECTORY_SEPARATOR)) {
-            $name = $this->getBasePath() . DIRECTORY_SEPARATOR . $name;
-        }
         $this->outfile = $name;
-        
         return $this;
     }
 
@@ -382,7 +378,7 @@ class Ghostscript
      */
     public function getOutputFile()
     {
-        if (0 !== strpos($this->outfile, DIRECTORY_SEPARATOR)) {
+        if (DIRECTORY_SEPARATOR !== $this->outfile[0]  && 0 === preg_match('/\A[A-Z]:/i', $this->outfile)) {
             return $this->getBasePath() . DIRECTORY_SEPARATOR . $this->outfile;
         }
 
@@ -440,7 +436,7 @@ class Ghostscript
         if (null === $this->getInputFile()) {
             return '';
         }
-        $string  = self::getGsPath();
+        $string  = '"' . self::getGsPath() . '"';
         $string .= ' -dSAFER -dQUIET -dNOPLATFONTS -dNOPAUSE -dBATCH';
         $string .= ' -sOutputFile="' . $this->getOutputFile() . '.' . $this->getDevice()->getFileEnding() . '"';
         $string .= $this->getDevice()->getParameterString();
@@ -652,11 +648,11 @@ class Ghostscript
         return $this;
     }
 
-     /**
-      * Shall we use the CIE map for color-conversions?
-      *
-      * @return boolean
-      */
+    /**
+     * Shall we use the CIE map for color-conversions?
+     *
+     * @return boolean
+     */
     public function useCie()
     {
         return (bool) $this->useCie;
