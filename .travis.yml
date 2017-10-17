@@ -25,7 +25,7 @@ addons:
   apt:
     packages:
       - ghostscript
-      
+
 matrix:
   fast_finish: true
   include:
@@ -60,6 +60,9 @@ matrix:
     - php: 7.1
       env:
        - DEPS=latest
+    - php: 7.2
+      env:
+      - DEPS=latest
     - php: nightly
       env:
         - DEPS=lowest
