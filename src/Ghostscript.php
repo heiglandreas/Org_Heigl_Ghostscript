@@ -282,7 +282,7 @@ class Ghostscript
             throw new \InvalidArgumentException('The given file is not executable');
         }
 
-        @exec('"' . escapeshellarg($path) . '" -v', $result);
+        @exec('"' . $path . '" -v', $result);
         $content = implode("\n", $result);
         if (false === stripos($content, 'ghostscript')) {
             throw new \InvalidArgumentException('No valid Ghostscript found');
