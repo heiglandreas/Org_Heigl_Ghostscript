@@ -21,6 +21,11 @@ env:
     - GH_REF: github.com:heiglandreas/Org_Heigl_Ghostscript.git
     - ENCRYPTION_LABEL: "f38516f65eab"
 
+addons:
+  apt:
+    packages:
+      - ghostscript
+      
 matrix:
   fast_finish: true
   include:
