@@ -282,7 +282,7 @@ class Ghostscript
             throw new \InvalidArgumentException('The given file is not executable');
         }
 
-        @exec($path . ' -v', $result);
+        @exec('"' . $path . '" -v', $result);
         $content = implode("\n", $result);
         if (false === stripos($content, 'ghostscript')) {
             throw new \InvalidArgumentException('No valid Ghostscript found');
@@ -363,9 +363,10 @@ class Ghostscript
      */
     public function setOutputFile($name = 'output')
     {
-        if (0 !== strpos($name, DIRECTORY_SEPARATOR)) {
+        if ($this->isRelative($name)) {
             $name = $this->getBasePath() . DIRECTORY_SEPARATOR . $name;
         }
+
         $this->outfile = $name;
         
         return $this;
@@ -382,7 +383,7 @@ class Ghostscript
      */
     public function getOutputFile()
     {
-        if (0 !== strpos($this->outfile, DIRECTORY_SEPARATOR)) {
+        if ($this->isRelative($this->outfile)) {
             return $this->getBasePath() . DIRECTORY_SEPARATOR . $this->outfile;
         }
 
@@ -440,7 +441,7 @@ class Ghostscript
         if (null === $this->getInputFile()) {
             return '';
         }
-        $string  = self::getGsPath();
+        $string  = '"' . self::getGsPath() . '"';
         $string .= ' -dSAFER -dQUIET -dNOPLATFONTS -dNOPAUSE -dBATCH';
         $string .= ' -sOutputFile="' . $this->getOutputFile() . '.' . $this->getDevice()->getFileEnding() . '"';
         $string .= $this->getDevice()->getParameterString();
@@ -652,11 +653,11 @@ class Ghostscript
         return $this;
     }
 
-     /**
-      * Shall we use the CIE map for color-conversions?
-      *
-      * @return boolean
-      */
+    /**
+     * Shall we use the CIE map for color-conversions?
+     *
+     * @return boolean
+     */
     public function useCie()
     {
         return (bool) $this->useCie;
@@ -877,6 +878,19 @@ class Ghostscript
         }
 
         return $this;
+    }
+
+    private function isRelative($path)
+    {
+        if (0 === strpos($path, DIRECTORY_SEPARATOR)) {
+            return false;
+        }
+
+        if (1 === strpos($path, ':\\') && preg_match('/^[A-Za-z]/', $path)) {
+            return false;
+        }
+
+        return true;
     }
 }
 
