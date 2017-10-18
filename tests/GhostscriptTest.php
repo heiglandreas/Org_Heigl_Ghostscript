@@ -185,7 +185,7 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
         $f = new Ghostscript();
         $dir = __DIR__ . DIRECTORY_SEPARATOR . 'support' . DIRECTORY_SEPARATOR;
         $filename = $dir . 'test.pdf';
-        $path = Ghostscript::getGsPath();
+        $path = '"' . Ghostscript::getGsPath() . '"';
         $this->assertEquals('', $f->getRenderString());
         $f->setInputFile($filename);
         $expect = $path . ' -dSAFER -dQUIET -dNOPLATFONTS -dNOPAUSE -dBATCH -sOutputFile="' . $dir  . 'output.png" -sDEVICE=pngalpha -r72 "' .$filename . '"';
@@ -287,5 +287,26 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
             'PATH',
             Ghostscript::class
         );
+    }
+
+    /** @dataProvider provideRelativePaths */
+    public function testThatRelativePathsAreCorrectlyDetected($path, $result)
+    {
+        $reflection = new \ReflectionClass(Ghostscript::class);
+        $method = $reflection->getMethod('isRelative');
+        $method->setAccessible(true);
+
+        $this->assertSame($result, $method->invokeArgs(new Ghostscript(), [$path]));
+    }
+
+    public function provideRelativePaths()
+    {
+        return [
+            ['/test/foo', false],
+            ['a:\foo', false],
+            ['bar', true],
+            ['\foob', true],
+            ['a:/test', true],
+        ];
     }
 }
