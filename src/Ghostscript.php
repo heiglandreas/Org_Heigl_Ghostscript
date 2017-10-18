@@ -653,11 +653,11 @@ class Ghostscript
         return $this;
     }
 
-     /**
-      * Shall we use the CIE map for color-conversions?
-      *
-      * @return boolean
-      */
+    /**
+     * Shall we use the CIE map for color-conversions?
+     *
+     * @return boolean
+     */
     public function useCie()
     {
         return (bool) $this->useCie;
