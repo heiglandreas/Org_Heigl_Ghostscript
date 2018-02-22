@@ -38,6 +38,9 @@ php:
 
 matrix:
   fast_finish : true
+  exclude:
+    - php: 7.2
+      env: DEPS=lowest
   allow_failures:
     - php: nightly
     - php: 5.6
