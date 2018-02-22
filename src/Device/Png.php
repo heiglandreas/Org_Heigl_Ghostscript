@@ -42,16 +42,16 @@ class Png implements DeviceInterface
      * This can be one of 'pngalpha', 'png16m', 'png256', 'png16', 'pnggray' or
      * 'pngmono'
      *
-     * @var string $_device
+     * @var string $device
      */
-    protected $_device = 'pngalpha';
+    private $device = 'pngalpha';
 
     /**
      * The Background-Color of the PNG
      *
-     * @var string $_color
+     * @var string $color
      */
-    protected $_color = null;
+    private $color = null;
 
 
     /**
@@ -61,7 +61,7 @@ class Png implements DeviceInterface
      */
     public function getDevice()
     {
-        return $this->_device;
+        return $this->device;
     }
 
     /**
@@ -78,8 +78,8 @@ class Png implements DeviceInterface
      */
     public function setDevice($device)
     {
-        $device = strtolower($device);
-        $devices = [
+        $device       = strtolower($device);
+        $devices      = [
                     'pngalpha',
                     'png16m',
                     'png256',
@@ -87,9 +87,9 @@ class Png implements DeviceInterface
                     'pnggray',
                     'pngmono',
                    ];
-        $this->_device = 'pngalpha';
+        $this->device = 'pngalpha';
         if (in_array($device, $devices)) {
-            $this->_device = $device;
+            $this->device = $device;
         }
 
         return $this;
@@ -125,7 +125,7 @@ class Png implements DeviceInterface
             $color = null;
         }
 
-        $this->_color = $color;
+        $this->color = $color;
 
         return $this;
     }
@@ -137,7 +137,7 @@ class Png implements DeviceInterface
      */
     public function getBackgroundColor()
     {
-        return $this->_color;
+        return $this->color;
     }
 
     /**

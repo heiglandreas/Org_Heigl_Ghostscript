@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ruleset name="HolidayChecker">
+    <description>The coding standard for HolidayChecker</description>
+    <rule ref="PSR2" />
+    <rule ref="PSR1.Files.SideEffects.FoundWithSymbols">
+        <exclude-pattern>src/Ghostscript.php</exclude-pattern>
+    </rule>
+    <!-- Paths to check -->
+    <file>src</file>
+    <file>tests</file>
+</ruleset>

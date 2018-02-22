@@ -188,19 +188,45 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
         $path = '"' . Ghostscript::getGsPath() . '"';
         $this->assertEquals('', $f->getRenderString());
         $f->setInputFile($filename);
-        $expect = $path . ' -dSAFER -dQUIET -dNOPLATFONTS -dNOPAUSE -dBATCH -sOutputFile="' . $dir  . 'output.png" -sDEVICE=pngalpha -r72 "' .$filename . '"';
+        $expect = $path
+                . ' -dSAFER -dQUIET -dNOPLATFONTS -dNOPAUSE -dBATCH -sOutputFile="'
+                . $dir
+                . 'output.png" -sDEVICE=pngalpha -r72 "'
+                . $filename
+                . '"';
         $this->assertEquals($expect, $f->getRenderString());
         $f->setTextAntiAliasing(Ghostscript::ANTIALIASING_HIGH);
-        $expect = $path . ' -dSAFER -dQUIET -dNOPLATFONTS -dNOPAUSE -dBATCH -sOutputFile="' . $dir  . 'output.png" -sDEVICE=pngalpha -r72 -dTextAlphaBits=4 "' .$filename . '"';
+        $expect = $path
+                . ' -dSAFER -dQUIET -dNOPLATFONTS -dNOPAUSE -dBATCH -sOutputFile="'
+                . $dir
+                . 'output.png" -sDEVICE=pngalpha -r72 -dTextAlphaBits=4 "'
+                . $filename
+                . '"';
         $this->assertEquals($expect, $f->getRenderString());
         $f->setGraphicsAntiAliasing(Ghostscript::ANTIALIASING_HIGH);
-        $expect = $path . ' -dSAFER -dQUIET -dNOPLATFONTS -dNOPAUSE -dBATCH -sOutputFile="' . $dir  . 'output.png" -sDEVICE=pngalpha -r72 -dTextAlphaBits=4 -dGraphicsAlphaBits=4 "' .$filename . '"';
+        $expect = $path
+                . ' -dSAFER -dQUIET -dNOPLATFONTS -dNOPAUSE -dBATCH -sOutputFile="'
+                . $dir
+                . 'output.png" -sDEVICE=pngalpha -r72 -dTextAlphaBits=4 -dGraphicsAlphaBits=4 "'
+                . $filename
+                . '"';
         $this->assertEquals($expect, $f->getRenderString());
         $f->setTextAntiAliasing(Ghostscript::ANTIALIASING_NONE);
-        $expect = $path . ' -dSAFER -dQUIET -dNOPLATFONTS -dNOPAUSE -dBATCH -sOutputFile="' . $dir  . 'output.png" -sDEVICE=pngalpha -r72 -dTextAlphaBits=1 -dGraphicsAlphaBits=4 "' .$filename . '"';
+        $expect = $path
+                . ' -dSAFER -dQUIET -dNOPLATFONTS -dNOPAUSE -dBATCH -sOutputFile="'
+                . $dir
+                . 'output.png" -sDEVICE=pngalpha -r72 -dTextAlphaBits=1 -dGraphicsAlphaBits=4 "'
+                . $filename
+                . '"';
         $this->assertEquals($expect, $f->getRenderString());
         $f->setDevice('jpeg');
-        $expect = $path . ' -dSAFER -dQUIET -dNOPLATFONTS -dNOPAUSE -dBATCH -sOutputFile="' . $dir  . 'output.jpeg" -sDEVICE=jpeg -dJPEGQ=75 -dQFactor=0.75 -r72 -dTextAlphaBits=1 -dGraphicsAlphaBits=4 "' .$filename . '"';
+        $expect = $path
+                . ' -dSAFER -dQUIET -dNOPLATFONTS -dNOPAUSE -dBATCH -sOutputFile="'
+                . $dir
+                . 'output.jpeg" -sDEVICE=jpeg -dJPEGQ=75 -dQFactor=0.75 -r72 -dTextAlphaBits=1'
+                . ' -dGraphicsAlphaBits=4 "'
+                . $filename
+                . '"';
         $this->assertEquals($expect, $f->getRenderString());
     }
 
@@ -235,7 +261,8 @@ class GhostscriptTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage No Ghostscript-instance found or running on windows. Please provide Path to the Ghostscript-executable
+     * @expectedExceptionMessage No Ghostscript-instance found or running on windows.
+     * Please provide Path to the Ghostscript-executable
      */
     public function testSettingDefaultGsPathFails()
     {
