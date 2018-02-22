@@ -27,9 +27,11 @@
 
 namespace Org_Heigl\GhostscriptTest;
 
+use Org_Heigl\Ghostscript\Device\DeviceInterface;
 use Org_Heigl\Ghostscript\Device\Png;
 use Org_Heigl\Ghostscript\Ghostscript;
 use PHPUnit\Framework\TestCase;
+use Mockery as M;
 
 /**
  * This class tests the Org_Heigl_Ghostscript-Class
@@ -335,6 +337,31 @@ class GhostscriptTest extends TestCase
             ['bar', true],
             ['\foob', true],
             ['a:/test', true],
+        ];
+    }
+
+    /** @dataProvider provideOutputFileNames */
+    public function testGetOutputFileName($filename, $ending, $expectedFilename)
+    {
+        $gs = new Ghostscript();
+
+        if ($ending) {
+            $device = M::mock(DeviceInterface::class);
+            $device->shouldReceive('getFileEnding')->andReturn($ending);
+            $gs->setDevice($device);
+        }
+
+        $gs->setOutputFile($filename);
+        $this->assertEquals($expectedFilename, basename($gs->getOutputFileName()));
+    }
+
+    public function provideOutputFileNames()
+    {
+        return [
+            ['test', null, 'test.png'],
+            ['test', 'jpeg', 'test.jpeg'],
+            ['test.png', null, 'test.png'],
+            ['test.abc', null, 'test.abc'],
         ];
     }
 }
