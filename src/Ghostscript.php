@@ -886,7 +886,7 @@ class Ghostscript
     public function getOutputFileName()
     {
         $basename = $this->getOutputFile();
-        $lastDot = strrpos('.', basename($basename));
+        $lastDot = strrpos(basename($basename), '.');
         if (false === $lastDot) {
             return $basename . '.' . $this->getDevice()->getFileEnding();
         }
