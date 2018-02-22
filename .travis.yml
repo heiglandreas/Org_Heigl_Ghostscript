@@ -15,98 +15,80 @@ cache:
 
 env:
   global:
-    - COMPOSER_ARGS="--no-interaction --ignore-platform-reqs"
+    - COMPOSER_ARGS: "--no-interaction --ignore-platform-reqs"
     - SITE_URL: https://heiglandreas.github.io/Org_Heigl_Ghostscript
     - GH_USER_NAME: "Andreas Heigl"
     - GH_USER_EMAIL: andreas@heigl.org
     - GH_REF: github.com:heiglandreas/Org_Heigl_Ghostscript.git
     - ENCRYPTION_LABEL: "f38516f65eab"
+    - MAIN_PHP_VERSION: 7.2
+  matrix:
+    - DEPS=latest
+    - DEPS=lowest
 
 addons:
   apt:
     packages:
       - ghostscript
 
-matrix:
-  fast_finish: true
-  include:
-    - php: 5.5
-      env:
-        - DEPS=lowest
-    - php: 5.5
-      env:
-        - DEPS=latest
-    - php: 5.6
-      env:
-        - DEPS=lowest
-    - php: 5.6
-      env:
-        - DEPS=latest
-    - php: 7
-      env:
-        - DEPS=lowest
-    - php: 7
-      env:
-        - DEPS=latest
-    - php: 7.1
-      env:
-        - DEPS=lowest
-    - php: 7.1
-      env:
-      - DEPS=locked
-      - TEST_COVERAGE=true
-      - WITH_CS=true
-      - DEPLOY_DOCS="$(if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then echo -n 'true' ; else echo -n 'false' ; fi)"
-      - PATH="$HOME/.local/bin:$PATH"
-    - php: 7.1
-      env:
-       - DEPS=latest
-    - php: 7.2
-      env:
-      - DEPS=latest
-    - php: nightly
-      env:
-        - DEPS=lowest
-    - php: nightly
-      env:
-        - DEPS=latest
-    - php: hhvm
-      env:
-        - DEPS=lowest
-    - php: hhvm
-      env:
-        - DEPS=latest
-  allow_failures:
-      - php: hhvm
-      - php: nightly
-      - php: 5.5
+php:
+- 5.6
+- 7.0
+- 7.1
+- 7.2
+- nightly
 
-notifications:
-  email: andreas@heigl.org
+matrix:
+  fast_finish : true
+  allow_failures:
+    - php: nightly
+
+stages:
+- checkcode
+- checkxml
+- test
+- coverage
+- deploy_docs
+
+jobs:
+  include:
+  - stage: checkcode
+    php: $MAIN_PHP_VERSION
+    script:
+    - composer cs-check
+  - stage: test
+    before_install:
+    - phpenv config-rm xdebug.ini || return 0
+    script:
+    - composer test
+  - stage: coverage
+    if: branch = master AND type = push
+    php: $MAIN_PHP_VERSION
+    env: TEST_COVERAGE=true
+    script:
+    - ls
+    after_script:
+    - travis_retry composer require $COMPOSER_ARGS --dev satooshi/php-coveralls ;
+    - composer test-coverage
+    - travis_retry composer upload-coverage
+  - stage: deploy_docs
+    if: branch = master AND type = push
+    php: $MAIN_PHP_VERSION
+    script:
+    - ls
+    after-script:
+    - echo "Preparing to build and deploy documentation"
+    - wget -O theme-installer.sh "https://raw.githubusercontent.com/zendframework/zf-mkdoc-theme/master/theme-installer.sh"
+    - chmod 755 theme-installer.sh
+    - ./theme-installer.sh
+    - ./zf-mkdoc-theme/deploy.sh
+    - echo "Completed deploying documentation"
 
 before_install:
   - travis_retry composer self-update
-  - if [[ $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
 
 install:
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "5.5" ]]; then composer require $COMPOSER_ARGS --dev --no-update "phpunit/phpunit:^4"; fi
-  - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
-  - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
-  - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer require $COMPOSER_ARGS --dev satooshi/php-coveralls ; fi
-  - travis_retry composer install $COMPOSER_ARGS
+  - if [[ $DEPS == 'lowest' ]]; then COMPOSER_ARGS="--prefer-lowest --prefer-stable $COMPOSER_ARGS"; fi
+  - travis_retry composer update $COMPOSER_ARGS
   - composer show --installed
 
-script:
-  - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; fi
-  - if [[ $TEST_COVERAGE != 'true' ]]; then composer test ; fi
-  - if [[ $CHECK_CS == 'true' ]]; then composer cs-check ; fi
-  - if [[ $DEPLOY_DOCS == "true" && "$TRAVIS_TEST_RESULT" == "0" ]]; then ./docsinstall.sh; composer api; fi
-  - if [[ "$WITH_CS" == "true" ]]; then vendor/bin/php-cs-fixer fix --verbose --diff --dry-run; fi
-
-
-after_success:
-  - if [[ $DEPLOY_DOCS == "true" ]]; then echo "Preparing to build and deploy documentation" ; ./.builddocs.sh ; echo "Completed deploying documentation" ; fi
-
-
-after_script:
-  - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer upload-coverage ; fi
