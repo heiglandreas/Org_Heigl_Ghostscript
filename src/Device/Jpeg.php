@@ -40,9 +40,9 @@ class Jpeg implements DeviceInterface
     /**
      * The quality of the JPEG
      *
-     * @var int $_quality
+     * @var int $quality
      */
-    protected $_quality = 75;
+    private $quality = 75;
     
     /**
      * Get the name of the device as Ghostscript expects it
@@ -90,7 +90,7 @@ class Jpeg implements DeviceInterface
             $quality = 0;
         }
 
-        $this->_quality = $quality;
+        $this->quality = $quality;
 
         return $this;
     }
@@ -102,7 +102,7 @@ class Jpeg implements DeviceInterface
      */
     public function getQuality()
     {
-        return $this->_quality;
+        return $this->quality;
     }
 
     /**

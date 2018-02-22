@@ -269,7 +269,10 @@ class Ghostscript
         if (null === $path) {
             exec('which gs', $output);
             if (! $output) {
-                throw new \UnexpectedValueException('No Ghostscript-instance found or running on windows. Please provide Path to the Ghostscript-executable');
+                throw new \UnexpectedValueException(
+                    'No Ghostscript-instance found or running on windows. ' .
+                    'Please provide Path to the Ghostscript-executable'
+                );
             }
             $path = $output[0];
         }
