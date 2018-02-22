@@ -28,6 +28,7 @@
 namespace Org_Heigl\GhostscriptTest\Device;
 
 use Org_Heigl\Ghostscript\Device\Png;
+use PHPUnit\Framework\TestCase;
 
 /**
  * This class tests the Org_Heigl_Ghostscript-Class
@@ -36,7 +37,7 @@ use Org_Heigl\Ghostscript\Device\Png;
  * @copyright 2008 Andreas Heigl<andreas@heigl.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
  */
-class PngTest extends \PHPUnit_Framework_TestCase
+class PngTest extends TestCase
 {
     public function testCreationOfPngClass()
     {
