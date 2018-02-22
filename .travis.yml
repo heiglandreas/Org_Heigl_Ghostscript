@@ -21,7 +21,6 @@ env:
     - GH_USER_EMAIL: andreas@heigl.org
     - GH_REF: github.com:heiglandreas/Org_Heigl_Ghostscript.git
     - ENCRYPTION_LABEL: "f38516f65eab"
-    - MAIN_PHP_VERSION: 7.2
   matrix:
     - DEPS=latest
     - DEPS=lowest
@@ -53,7 +52,7 @@ stages:
 jobs:
   include:
   - stage: checkcode
-    php: $MAIN_PHP_VERSION
+    php: 7.2
     script:
     - composer cs-check
   - stage: test
@@ -63,7 +62,7 @@ jobs:
     - composer test
   - stage: coverage
     if: branch = master AND type = push
-    php: $MAIN_PHP_VERSION
+    php: 7.2
     env: TEST_COVERAGE=true
     script:
     - ls
@@ -73,7 +72,7 @@ jobs:
     - travis_retry composer upload-coverage
   - stage: deploy_docs
     if: branch = master AND type = push
-    php: $MAIN_PHP_VERSION
+    php: 7.2
     script:
     - ls
     after-script:
