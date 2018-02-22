@@ -42,7 +42,6 @@
         "cs-check": [
             "@cs-download",
             "./phpcs --version && ./phpcs"
-        ],
-
+        ]
     }
 }
