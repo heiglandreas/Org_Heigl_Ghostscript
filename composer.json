@@ -21,15 +21,28 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^5.3",
-        "phpdocumentor/phpdocumentor": "^2.9",
-        "friendsofphp/php-cs-fixer": "^2.1"
+        "phpdocumentor/phpdocumentor": "^2.9"
     },
     "scripts" : {
-        "cs-check": "php-cs-fixer --version && php-cs-fixer fix . --level=psr2 -v --diff --dry-run",
-        "cs-fix" : "./vendor/bin/php-cs-fixer fix . --level=psr2 -v",
         "test" : "./vendor/bin/phpunit",
         "api" : "./vendor/bin/phpdoc",
         "test-coverage": "phpunit --coverage-clover clover.xml",
-        "upload-coverage": "coveralls -v"
+        "upload-coverage": [
+            "curl -o coveralls -L https://github.com/php-coveralls/php-coveralls/releases/download/v2.0.0/php-coveralls.phar",
+            "chmod 755 coveralls",
+            "./coveralls -v"
+        ],
+        "cs-download" : [
+            "curl -o phpcs -L https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.2.2/phpcs.phar",
+            "curl -o phpcs.asc -L https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.2.2/phpcs.phar.asc",
+            "# gpg --verify phpcs.asc phpcs",
+            "chmod 755 phpcs"
+        ],
+
+        "cs-check": [
+            "@cs-download",
+            "./phpcs --version && ./phpcs"
+        ],
+
     }
 }
