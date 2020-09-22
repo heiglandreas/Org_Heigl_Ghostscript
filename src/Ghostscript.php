@@ -225,6 +225,7 @@ class Ghostscript
      * @var array $supportedMimeTypes
      */
     private static $supportedMimeTypes = [
+        'application/postscript',
         'application/eps',
         'application/pdf',
         'application/ps',
