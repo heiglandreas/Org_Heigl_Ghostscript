@@ -20,5 +20,5 @@ jobs:
       - name: install tools
         run: composer require --dev phpunit/phpunit
       - name: Run Unit-Tests
-        run: ./vendor/bin/phpunit --testdox
+        run: ./vendor/bin/phpunit --testdox --coverage-text
 
