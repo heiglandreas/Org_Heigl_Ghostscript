@@ -9,6 +9,8 @@ jobs:
     name: Test on ${{ matrix.php-versions }}
     steps:
       - uses: actions/checkout@v4
+      - name: install Ghostscript
+        run: sudo apt-get install -y ghostscript
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
