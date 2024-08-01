@@ -3,6 +3,9 @@
     "description": "A PHP-Wrapper around the Ghostscript-CLI",
     "type": "library",
     "license": "MIT",
+	"require": {
+		"php": "^7.4||^8.0"
+	},
     "authors": [
         {
             "name": "Andreas Heigl",

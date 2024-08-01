@@ -58,11 +58,9 @@ class GhostscriptTest extends TestCase
         $this->assertNotEquals(null, $path);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testSettingFileWorks()
     {
+		$this->expectException(\InvalidArgumentException::class);
         $f = new Ghostscript();
         $f->setInputFile(__FILE__);
         $comp = new \SplFileInfo(__FILE__);
@@ -91,7 +89,7 @@ class GhostscriptTest extends TestCase
         $f->setDevice(new Png());
         $f->setInputFile(__DIR__ . '/support/test.pdf');
         $f->setOutputFile($outfile);
-        $this->assertContains($expectedResultInRenderString, $f->getRenderString());
+        $this->assertStringContainsString($expectedResultInRenderString, $f->getRenderString());
     }
 
     public function settingOutfileIsRepresentedInRenderStringProvider()
@@ -247,18 +245,12 @@ class GhostscriptTest extends TestCase
     public function testSettingPages()
     {
         $f = new Ghostscript();
-        $this->assertAttributeEquals(null, 'pageStart', $f);
-        $this->assertAttributeEquals(null, 'pageEnd', $f);
         $this->assertEmpty($f->getPageRangeString());
 
         $f->setPages(2);
-        $this->assertAttributeEquals(2, 'pageStart', $f);
-        $this->assertAttributeEquals(null, 'pageEnd', $f);
         $this->assertEquals(' -dFirstPage=2 -dLastPage=2', $f->getPageRangeString());
 
         $f->setPages(3, 4);
-        $this->assertAttributeEquals(3, 'pageStart', $f);
-        $this->assertAttributeEquals(4, 'pageEnd', $f);
         $this->assertEquals(' -dFirstPage=3 -dLastPage=4', $f->getPageRangeString());
     }
 
@@ -274,7 +266,8 @@ class GhostscriptTest extends TestCase
             $this->markTestSkipped('Can not test due to installed GS');
         }
 
-        $this->setExpectedExceptionFromAnnotation();
+		$this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage('No Ghostscript-instance found or running on windows.');
 
         Ghostscript::setGsPath();
     }
@@ -288,34 +281,29 @@ class GhostscriptTest extends TestCase
 
         Ghostscript::setGsPath();
 
-        $this->assertAttributeEquals($output[0], 'PATH', Ghostscript::class);
+        $this->assertEquals($output[0], Ghostscript::getGsPath());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The given file is not executable
-     */
     public function testThatSettingPathToNonExecutableFails()
     {
+		$this->expectException(\InvalidArgumentException::class);
+		$this->expectExceptionMessage('The given file is not executable');
         Ghostscript::setGsPath(__DIR__ . '/_assets/nonExecutable');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage No valid Ghostscript found
-     */
     public function testThatSettingPathToNonGsFails()
     {
-        Ghostscript::setGsPath(__DIR__ . '/_assets/executableNonGs');
+		$this->expectException(\InvalidArgumentException::class);
+		$this->expectExceptionMessage('No valid Ghostscript found');
+		Ghostscript::setGsPath(__DIR__ . '/_assets/executableNonGs');
     }
 
     public function testThatSettingPathToSomethingGsLikeWorks()
     {
         Ghostscript::setGsPath(__DIR__ . '/_assets/executableGs');
-        $this->assertAttributeEquals(
+        $this->assertEquals(
             __DIR__ . '/_assets/executableGs',
-            'PATH',
-            Ghostscript::class
+            Ghostscript::getGsPath()
         );
     }
 
