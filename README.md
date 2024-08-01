@@ -1,8 +1,12 @@
 # Org_Heigl\Ghostscript
 
-[![Build Status](https://travis-ci.org/heiglandreas/Org_Heigl_Ghostscript.svg?branch=master)](https://travis-ci.org/heiglandreas/Org_Heigl_Ghostscript)
+[![CI](https://github.com/heiglandreas/Org_Heigl_Ghostscript/actions/workflows/ci.yml/badge.svg)](https://github.com/heiglandreas/Org_Heigl_Ghostscript/actions/workflows/ci.yml)
 [![Coverage Status](https://coveralls.io/repos/github/heiglandreas/Org_Heigl_Ghostscript/badge.svg?branch=master)](https://coveralls.io/github/heiglandreas/Org_Heigl_Ghostscript?branch=master)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6be2e49960764a688d269c043d30216c)](https://www.codacy.com/app/github_70/Org_Heigl_Ghostscript?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=heiglandreas/Org_Heigl_Ghostscript&amp;utm_campaign=Badge_Grade)
+[![Latest Stable Version](http://poser.pugx.org/org_heigl/ghostscript/v)](https://packagist.org/packages/org_heigl/ghostscript)
+[![Total Downloads](http://poser.pugx.org/org_heigl/ghostscript/downloads)](https://packagist.org/packages/org_heigl/ghostscript)
+[![Latest Unstable Version](http://poser.pugx.org/org_heigl/ghostscript/v/unstable)](https://packagist.org/packages/org_heigl/ghostscript)
+[![License](http://poser.pugx.org/org_heigl/ghostscript/license)](https://packagist.org/packages/org_heigl/ghostscript)
+[![PHP Version Require](http://poser.pugx.org/org_heigl/ghostscript/require/php)](https://packagist.org/packages/org_heigl/ghostscript)
 
 A PHP-wrapper to the Ghostscript-CLI
 
