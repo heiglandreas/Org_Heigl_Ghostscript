@@ -135,6 +135,13 @@ class Ghostscript
     const ANTIALIASING_HIGH   = 4;
 
     /**
+     * This property stores the output-device
+     *
+     * @var string $device
+     */
+    protected $device;
+
+    /**
      * Store the resolution
      *
      * @var string $_resolution
