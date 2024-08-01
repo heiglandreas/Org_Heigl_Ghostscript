@@ -42,7 +42,7 @@ use Mockery as M;
  */
 class GhostscriptTest extends TestCase
 {
-    public function setup()
+    public function setup(): void
     {
         Ghostscript::setGsPath();
     }
