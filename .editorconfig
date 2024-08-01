@@ -1,0 +1,28 @@
+root = true
+
+[*]
+charset = utf-8
+tab_width = 4
+trim_trailing_whitespace = true
+indent_size = tab
+indent_style = tab
+insert_final_newline = true
+end_of_line = lf
+
+[{*.yml,*.yml.dist}]
+indent_style = space
+indent_size = 2
+tab_width = 2
+
+[*.xml]
+tab_width = 2
+
+[*.json]
+tab_width = 2
+
+[COMMIT_EDITMSG]
+max_line_length = 72
+
+[*.md]
+max_line_length = 80
+
