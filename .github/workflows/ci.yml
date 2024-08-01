@@ -17,8 +17,31 @@ jobs:
           php-version: ${{ matrix.php-versions }}
       - name: install dependencies
         run: composer install
-      - name: install tools
-        run: composer require --dev phpunit/phpunit
       - name: Run Unit-Tests
         run: ./vendor/bin/phpunit --testdox --coverage-text
 
+  coverage:
+    needs: test
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: install Ghostscript
+        run: sudo apt-get install -y ghostscript
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          coverage: xdebug
+      - name: install dependencies
+        run: composer install
+      - name: install tools
+        run: composer install
+      - name: run testsuite
+        run: ./vendor/bin/phpunit --testdox --colors=always --coverage-clover clover.xml
+      - name: upload to codecov
+        uses: codecov/codecov-action@v1
+        with:
+          files: ./clover.xml
